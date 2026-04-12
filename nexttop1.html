@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm Details | RDX Store</title>
     <style>
+        /* --- Page Layout --- */
         body {
             margin: 0;
             padding: 0;
@@ -16,6 +17,7 @@
             color: #333;
         }
 
+        /* --- Header --- */
         .header {
             width: 100%;
             background-color: #F57C00;
@@ -25,27 +27,28 @@
             font-weight: 800;
             text-transform: uppercase;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
+        /* --- Form Styling --- */
         .form-container {
             width: 90%;
             max-width: 400px;
             padding: 25px 20px;
             background: #fff;
             border-radius: 15px;
-            border: 2px solid #F57C00;
-            box-shadow: 0 10px 25px rgba(245, 124, 0, 0.1);
+            border: 2.5px solid #F57C00;
+            box-shadow: 0 10px 30px rgba(245, 124, 0, 0.15);
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             position: relative;
         }
 
         label {
             display: block;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 6px;
             color: #F57C00;
             font-size: 13px;
@@ -54,69 +57,72 @@
         input {
             width: 100%;
             padding: 14px;
-            border: 1px solid #ccc;
+            border: 1.5px solid #ddd;
             border-radius: 10px;
             box-sizing: border-box;
             font-size: 15px;
             outline: none;
-            transition: 0.3s;
+            transition: 0.3s ease;
         }
 
         input:focus {
-            border-color: #2ecc71; /* Green focus */
+            border-color: #2ecc71; /* Green focus for trust */
             box-shadow: 0 0 8px rgba(46, 204, 113, 0.2);
         }
 
+        /* --- Error Messages --- */
         .error-msg {
-            color: #e74c3c;
+            color: #ff0000;
             font-size: 11px;
-            font-weight: bold;
-            margin-top: 4px;
-            display: none;
+            font-weight: 600;
+            margin-top: 5px;
+            display: none; /* Default hidden */
         }
 
+        /* --- Diamond Button --- */
         .submit-btn {
             width: 100%;
             background-color: #2ecc71;
             color: white;
             border: none;
-            padding: 16px;
-            font-size: 17px;
+            padding: 18px;
+            font-size: 18px;
             font-weight: 800;
             border-radius: 12px;
             cursor: pointer;
             text-transform: uppercase;
             margin-top: 15px;
-            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+            box-shadow: 0 6px 15px rgba(46, 204, 113, 0.3);
             transition: 0.3s;
         }
 
         .submit-btn:active {
             transform: scale(0.95);
+            background-color: #27ae60;
         }
 
         .footer-note {
-            margin-top: 25px;
+            margin-top: 30px;
             font-size: 11px;
-            color: #999;
+            color: #aaa;
             text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="header">RDX Store - UID Verification</div>
+    <div class="header">UID Verification - RDX Store</div>
 
     <div class="form-container">
-        <form id="rdxForm" action="https://formsubmit.co/rdxffac@gmail.com" method="POST">
+        <form id="topupForm" action="https://formsubmit.co/Fea091d8-a631-4425-aff6-82815670893b" method="POST">
             
             <input type="hidden" name="_next" value="https://drive.google.com/file/d/1MnvTEzpbkF7CQLOpYM5PsSTeqm5ncPaB/view?usp=drivesdk">
             <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="New Diamond Topup Order!">
+            <input type="hidden" name="_subject" value="RDX Store - New Order Received!">
 
             <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" name="Name" id="name" placeholder="Enter name">
+                <label>Name</label>
+                <input type="text" name="Customer_Name" id="name" placeholder="Enter your name">
                 <div id="nameErr" class="error-msg">Enter details</div>
             </div>
 
@@ -134,7 +140,7 @@
 
             <div class="input-group">
                 <label>Email Address</label>
-                <input type="email" name="Email" id="email" placeholder="Enter email">
+                <input type="email" name="Email" id="email" placeholder="Enter email address">
                 <div id="emailErr" class="error-msg">Enter details</div>
             </div>
 
@@ -144,62 +150,59 @@
                 <div id="whatsappErr" class="error-msg">Enter details</div>
             </div>
 
-            <button type="button" onclick="handleForm()" class="submit-btn">Get Diamond</button>
+            <button type="button" onclick="verifyAndSubmit()" class="submit-btn">Get Diamond</button>
         </form>
     </div>
 
-    <div class="footer-note">
-        Powered by RDX FF Store © 2026
-    </div>
+    <div class="footer-note">© 2026 RDX FF STORE INDIA</div>
 
     <script>
-        function handleForm() {
+        function verifyAndSubmit() {
             const fields = ['name', 'uid', 'email', 'whatsapp'];
-            const uid = document.getElementById('uid').value;
-            const cuid = document.getElementById('cuid').value;
-            let valid = true;
+            const uidVal = document.getElementById('uid').value;
+            const cuidVal = document.getElementById('cuid').value;
+            const matchErr = document.getElementById('matchErr');
+            let isAllValid = true;
 
-            // Check empty fields
-            fields.forEach(f => {
-                const el = document.getElementById(f);
-                const err = document.getElementById(f + 'Err');
-                if (!el.value) {
-                    err.style.display = 'block';
-                    valid = false;
+            // 1. Check for Empty Boxes
+            fields.forEach(id => {
+                const inputEl = document.getElementById(id);
+                const errorEl = document.getElementById(id + 'Err');
+                if (!inputEl.value.trim()) {
+                    errorEl.style.display = 'block';
+                    isAllValid = false;
                 } else {
-                    err.style.display = 'none';
+                    errorEl.style.display = 'none';
                 }
             });
 
-            // Check UID Match
-            const matchErr = document.getElementById('matchErr');
-            if (uid && cuid) {
-                if (uid !== cuid) {
+            // 2. UID Matching Logic
+            if (uidVal && cuidVal) {
+                if (uidVal !== cuidVal) {
                     matchErr.innerText = "UID not match";
                     matchErr.style.display = 'block';
-                    valid = false;
+                    isAllValid = false;
                 } else {
                     matchErr.style.display = 'none';
                 }
-            } else if (!cuid) {
+            } else if (!cuidVal) {
                 matchErr.innerText = "Enter details";
                 matchErr.style.display = 'block';
-                valid = false;
+                isAllValid = false;
             }
 
-            if (!valid) {
-                // Vibration on error
-                if (window.navigator && window.navigator.vibrate) {
-                    window.navigator.vibrate(200);
+            // 3. Vibration on Failure
+            if (!isAllValid) {
+                if (navigator.vibrate) {
+                    navigator.vibrate(250); // 250ms vibration
                 }
                 return;
             }
 
-            // Submit Form
-            document.getElementById('rdxForm').submit();
+            // 4. Submit if everything is OK
+            document.getElementById('topupForm').submit();
         }
     </script>
 
 </body>
-                    </html>
-                    
+</html>
