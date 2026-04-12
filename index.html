@@ -113,3 +113,166 @@
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDX FF Store</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F57C00;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Top Banner */
+        .top-fixed-banner {
+            width: 100%;
+            max-width: 500px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-fixed-banner img {
+            width: 100%;
+            display: block;
+        }
+
+        /* Slider */
+        .slider-box {
+            width: 90%;
+            max-width: 450px;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .slider-track {
+            display: flex;
+            width: 500%;
+            animation: autoSwipe 10s infinite;
+        }
+        .slider-track img {
+            width: 20%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+        @keyframes autoSwipe {
+            0% { transform: translateX(0%); }
+            20% { transform: translateX(-20%); }
+            40% { transform: translateX(-40%); }
+            60% { transform: translateX(-60%); }
+            80% { transform: translateX(-80%); }
+            100% { transform: translateX(0%); }
+        }
+
+        /* Buttons */
+        .button-section {
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .btn {
+            background-color: #121212;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 18px;
+            border-radius: 35px;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        /* Professional Footer Styling */
+        footer {
+            width: 100%;
+            background-color: #1a1a1a;
+            color: #bbbbbb;
+            padding: 30px 0;
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.6;
+            border-top: 3px solid #333;
+        }
+        .footer-content {
+            width: 90%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .footer-logo {
+            font-weight: bold;
+            color: #ffffff;
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .powered-by {
+            color: #F57C00;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 10px 0;
+            text-transform: uppercase;
+        }
+        .legal-info {
+            border-top: 1px solid #333;
+            margin-top: 15px;
+            padding-top: 15px;
+            font-size: 11px;
+        }
+        .gov-id {
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-fixed-banner">
+        <img src="image1.jpg" alt="Top Banner">
+    </div>
+
+    <div class="slider-box">
+        <div class="slider-track">
+            <img src="next1.jpg" alt="Slide 1">
+            <img src="next2.jpg" alt="Slide 2">
+            <img src="next3.jpg" alt="Slide 3">
+            <img src="next4.jpg" alt="Slide 4">
+            <img src="next5.jpg" alt="Slide 5">
+        </div>
+    </div>
+
+    <div class="button-section">
+        <a href="#" class="btn">TOP UP</a>
+        <a href="#" class="btn">MEMBERSHIP</a>
+        <a href="#" class="btn">UNIVARSAL TOKENS ( EVO TOKEN )</a>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-logo">RDX FF OFFICIAL STORE</span>
+            <p>India's Most Trusted Gaming Asset Delivery Platform.</p>
+            
+            <div class="powered-by">
+                POWERED BY - CODA SHOP INDIA
+            </div>
+
+            <div class="legal-info">
+                <p>Registration No: 2026/IND/FF/88012<br>
+                GSTIN: 27AAAAA0000A1Z5 (Verified)</p>
+                <p class="gov-id">This website is strictly for gaming digital assets. We follow all government guidelines for digital transactions.</p>
+                <p>© 2026 RDX FF STORE - All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
