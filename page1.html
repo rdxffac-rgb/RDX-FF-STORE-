@@ -1,1 +1,169 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond Topup | RDX Store</title>
+    <style>
+        /* --- Page Base --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* Pure White Background */
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        /* --- Header --- */
+        .header-title {
+            width: 100%;
+            background-color: #F57C00; /* Main Orange Color */
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 22px;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        /* --- Diamond Card Grid --- */
+        .grid-container {
+            width: 92%;
+            max-width: 500px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            position: relative;
+            background: #ffffff;
+            border-radius: 15px;
+            padding: 25px 10px;
+            text-align: center;
+            border: 2px solid #F57C00; /* Orange Border */
+            box-shadow: 0 6px 15px rgba(245, 124, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+
+        .card:active {
+            transform: scale(0.97);
+        }
+
+        /* --- Text & Price --- */
+        .diamond-amount {
+            font-size: 17px;
+            font-weight: bold;
+            color: #2ecc71; /* Green for Diamonds */
+            margin-top: 10px;
+        }
+
+        .price-text {
+            font-size: 22px;
+            margin: 12px 0;
+            font-weight: 900;
+            color: #F57C00; /* Orange for Price */
+        }
+
+        /* --- Get Diamond Button --- */
+        .get-btn {
+            background-color: #2ecc71; /* Green Button */
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 12px 0;
+            border-radius: 10px;
+            width: 90%;
+            text-transform: uppercase;
+            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+        }
+
+        /* --- Popular Blinking Tag (400 Rs Pack) --- */
+        .hot-tag {
+            position: absolute;
+            top: -12px;
+            right: -5px;
+            background: linear-gradient(45deg, #FFD700, #FFA000); /* Golden Tag */
+            color: #000;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 6px 12px;
+            border-radius: 20px;
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+            text-transform: uppercase;
+            animation: blinker 1s linear infinite;
+            z-index: 10;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0.3; transform: scale(1.05); }
+        }
+
+        .special-card {
+            background-color: #fffaf0; /* Light Orange hint for special pack */
+            border-width: 3px;
+        }
+
+        /* --- Footer Back Link --- */
+        .back-home {
+            margin-bottom: 40px;
+            color: #F57C00;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 2px solid #F57C00;
+            padding-bottom: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">Diamond Shop</div>
+
+    <div class="grid-container">
+        
+        <div class="card">
+            <span style="font-size: 35px;">💎</span>
+            <div class="diamond-amount">200 Diamonds</div>
+            <div class="price-text">₹100</div>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
+        </div>
+
+        <div class="card">
+            <span style="font-size: 35px;">💎</span>
+            <div class="diamond-amount">310 Diamonds</div>
+            <div class="price-text">₹120</div>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
+        </div>
+
+        <div class="card special-card">
+            <div class="hot-tag">🔥 HOT</div>
+            <span style="font-size: 35px;">💎</span>
+            <div class="diamond-amount">1120 Diamonds</div>
+            <div class="price-text">₹400</div>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
+        </div>
+
+        <div class="card">
+            <span style="font-size: 35px;">💎</span>
+            <div class="diamond-amount">2180 Diamonds</div>
+            <div class="price-text">₹800</div>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="back-home">← Home Page Par Jayein</a>
+
+</body>
+  </html>
 
