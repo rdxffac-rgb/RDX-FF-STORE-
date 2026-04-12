@@ -15,16 +15,20 @@
             flex-direction: column;
             align-items: center;
             color: white;
+            /* Header ki wajah se upar se 70px ka gap diya hai */
+            padding-top: 70px; 
         }
 
-        /* --- 1. Top Fixed Banner --- */
+        /* --- 1. Top Fixed Banner (Purely Fixed) --- */
         .header-fixed {
             width: 100%;
             max-width: 500px;
-            position: sticky;
+            position: fixed; /* Sticky se Fixed kar diya hai */
             top: 0;
+            left: 50%;
+            transform: translateX(-50%); /* Center mein rakhne ke liye */
             z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
         .header-fixed img {
             width: 100%;
@@ -35,7 +39,7 @@
         .slider-container {
             width: 92%;
             max-width: 460px;
-            margin: 25px 0;
+            margin: 20px 0;
             overflow: hidden;
             border-radius: 15px;
             border: 2px solid rgba(255,255,255,0.2);
@@ -44,7 +48,7 @@
         .slider-wrapper {
             display: flex;
             width: 500%; /* 5 images */
-            animation: leftSwipe 10s infinite; /* 2 seconds per image */
+            animation: leftSwipe 10s infinite; 
         }
         .slider-wrapper img {
             width: 20%;
@@ -68,6 +72,7 @@
             display: flex;
             flex-direction: column;
             gap: 18px;
+            margin-top: 10px;
             margin-bottom: 50px;
         }
         .diamond-btn {
@@ -88,7 +93,7 @@
             transition: 0.3s;
         }
         
-        /* Shine Effect Animation */
+        /* Shine Animation */
         .diamond-btn::after {
             content: '';
             position: absolute;
