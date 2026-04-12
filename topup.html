@@ -40,7 +40,6 @@
         }
 
         .card {
-            position: relative;
             background: #ffffff;
             border-radius: 15px;
             padding: 25px 10px;
@@ -78,24 +77,6 @@
             text-transform: uppercase;
         }
 
-        /* Hot Tag */
-        .hot-tag {
-            position: absolute;
-            top: -12px;
-            right: -5px;
-            background: linear-gradient(45deg, #FFD700, #FFA000);
-            color: #000;
-            font-size: 10px;
-            font-weight: 900;
-            padding: 6px 12px;
-            border-radius: 20px;
-            animation: blinker 1s linear infinite;
-            z-index: 10;
-        }
-
-        @keyframes blinker { 50% { opacity: 0.3; } }
-
-        /* --- Live Notification Styling --- */
         .notification-container {
             width: 90%;
             max-width: 400px;
@@ -146,84 +127,101 @@
             <div class="price-text">₹100</div>
             <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
-
         <div class="card">
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">310 Diamonds</div>
             <div class="price-text">₹120</div>
-            <a href="nexttop2.html" class="get-btn">Get Diamond</a>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
-
         <div class="card">
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">1000 Diamonds</div>
             <div class="price-text">₹349</div>
-            <a href="nexttop3.html" class="get-btn">Get Diamond</a>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
-
         <div class="card">
-            <div class="hot-tag">🔥 HOT</div>
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">1120 Diamonds</div>
             <div class="price-text">₹400</div>
-            <a href="nexttop4.html" class="get-btn">Get Diamond</a>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
-
         <div class="card">
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">2180 Diamonds</div>
             <div class="price-text">₹800</div>
-            <a href="nexttop5.html" class="get-btn">Get Diamond</a>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
-
         <div class="card">
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">2800 Diamonds</div>
             <div class="price-text">₹1000</div>
-            <a href="nexttop6.html" class="get-btn">Get Diamond</a>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
     </div>
 
     <div class="notification-container">
-        <div class="notif-track" id="notifTrack">
-            <div class="notif-item">✅ पवन_yt top up 200 diamonds 💎</div>
-        </div>
+        <div class="notif-track" id="notifTrack"></div>
     </div>
 
     <a href="index.html" class="back-home">← GO BACK</a>
 
     <script>
-        const names = ["Aman_ff", "Raj_Gaming", "Sumit_YT", "Vicky_07", "Rahul_King", "Deepak_99", "Pawan_yt", "Ankit_ff", "Sameer_ff", "Karan_Gamer", "Lucky_yt", "Arjun_ff", "Rohan_ff", "Amit_ff", "Sonu_gamer", "Monu_yt", "Gaurav_ff", "Sunny_07", "Kapil_ff", "Bunny_yt"];
+        // Prefix aur Suffix ki badi list
+        const prefix = ["Pro", "Killer", "Badboy", "Royal", "Gaming", "Legend", "Boss", "Cobra", "Don", "Master", "Star", "Elite", "Super", "Noob_to", "Shadow", "Thunder", "God", "Tiger", "Alpha", "Gamer"];
+        const names = ["Aman", "Rahul", "Sumit", "Vicky", "Raj", "Deepak", "Ankit", "Sameer", "Karan", "Lucky", "Arjun", "Rohan", "Amit", "Sonu", "Monu", "Gaurav", "Sunny", "Kapil", "Bunny", "Umesh", "Nitish", "Ayush", "Sachin", "Vishal", "Vikram"];
+        const suffix = ["_yt", "_ff", "_07", "_Gamer", "_YT", "_Gaming", "_King", "_Pro", "_Boy", "_99", "_Official", "_FF", "_Live", "_Squad"];
         const amounts = ["200", "310", "1000", "1120", "2180", "2800"];
-        
+
         const track = document.getElementById('notifTrack');
 
-        function updateNotification() {
-            const randomName = names[Math.floor(Math.random() * names.length)];
-            const randomAmount = amounts[Math.floor(Math.random() * amounts.length)];
+        function generateSyncedName(index) {
+            // Seed based logic taaki sabke phone pe same bane
+            const p = prefix[index % prefix.length];
+            const n = names[(index * 7) % names.length];
+            const s = suffix[(index * 3) % suffix.length];
             
-            // Naya item add karna
-            const newItem = document.createElement('div');
-            newItem.className = 'notif-item';
-            newItem.innerHTML = `✅ ${randomName} top up ${randomAmount} diamonds 💎`;
-            track.appendChild(newItem);
-
-            // Swipe Up Animation
-            track.style.transform = 'translateY(-40px)';
-
-            // Purana item remove karna animation ke baad
-            setTimeout(() => {
-                track.style.transition = 'none';
-                track.removeChild(track.firstElementChild);
-                track.style.transform = 'translateY(0)';
-                setTimeout(() => {
-                    track.style.transition = 'transform 0.8s ease-in-out';
-                }, 50);
-            }, 800);
+            // Indian names pattern: Pro_Rahul_ff, Killer_Aman_Gamer etc.
+            return `${p}_${n}${s}`;
         }
 
-        // Har 6 second mein update hoga
-        setInterval(updateNotification, 6000);
+        function getGlobalSyncIndex() {
+            return Math.floor(Date.now() / 6500); // 6.5 sec delay
+        }
+
+        function createNotifItem(index) {
+            const syncName = generateSyncedName(index);
+            const amount = amounts[(index * 13) % amounts.length];
+            
+            const div = document.createElement('div');
+            div.className = 'notif-item';
+            div.innerHTML = `✅ ${syncName} top up ${amount} diamonds 💎`;
+            return div;
+        }
+
+        let currentIndex = getGlobalSyncIndex();
+        track.appendChild(createNotifItem(currentIndex));
+
+        function syncNotification() {
+            const newIndex = getGlobalSyncIndex();
+            if (newIndex !== currentIndex) {
+                currentIndex = newIndex;
+                const newItem = createNotifItem(currentIndex);
+                track.appendChild(newItem);
+
+                track.style.transform = 'translateY(-40px)';
+                setTimeout(() => {
+                    track.style.transition = 'none';
+                    track.removeChild(track.firstElementChild);
+                    track.style.transform = 'translateY(0)';
+                    setTimeout(() => {
+                        track.style.transition = 'transform 0.8s ease-in-out';
+                    }, 50);
+                }, 800);
+            }
+        }
+
+        setInterval(syncNotification, 1000);
     </script>
 </body>
-</html>
+            </html>
+    
