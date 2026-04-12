@@ -66,7 +66,7 @@
         }
 
         input:focus {
-            border-color: #2ecc71; /* Green focus for trust */
+            border-color: #2ecc71;
             box-shadow: 0 0 8px rgba(46, 204, 113, 0.2);
         }
 
@@ -76,7 +76,7 @@
             font-size: 11px;
             font-weight: 600;
             margin-top: 5px;
-            display: none; /* Default hidden */
+            display: none;
         }
 
         /* --- Diamond Button --- */
@@ -98,7 +98,6 @@
 
         .submit-btn:active {
             transform: scale(0.95);
-            background-color: #27ae60;
         }
 
         .footer-note {
@@ -114,21 +113,16 @@
     <div class="header">UID Verification - RDX Store</div>
 
     <div class="form-container">
-        <form id="topupForm" action="https://formsubmit.co/Fea091d8-a631-4425-aff6-82815670893b" method="POST">
-            
-            <input type="hidden" name="_next" value="https://drive.google.com/file/d/11pgxHnlYFkW3IfidL3kSVQgv_lhkD41I/view?usp=drivesdk">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_subject" value="RDX Store - New Order Received!">
-
+        <form id="topupForm">
             <div class="input-group">
                 <label>Name</label>
-                <input type="text" name="Customer_Name" id="name" placeholder="Enter your name">
+                <input type="text" id="name" placeholder="Enter your name">
                 <div id="nameErr" class="error-msg">Enter details</div>
             </div>
 
             <div class="input-group">
                 <label>Free Fire UID</label>
-                <input type="number" name="FF_UID" id="uid" placeholder="Enter Player UID">
+                <input type="number" id="uid" placeholder="Enter Player UID">
                 <div id="uidErr" class="error-msg">Enter details</div>
             </div>
 
@@ -140,31 +134,31 @@
 
             <div class="input-group">
                 <label>Email Address</label>
-                <input type="email" name="Email" id="email" placeholder="Enter email address">
+                <input type="email" id="email" placeholder="Enter email address">
                 <div id="emailErr" class="error-msg">Enter details</div>
             </div>
 
             <div class="input-group">
                 <label>WhatsApp Number</label>
-                <input type="number" name="WhatsApp" id="whatsapp" placeholder="Enter WhatsApp number">
+                <input type="number" id="whatsapp" placeholder="Enter WhatsApp number">
                 <div id="whatsappErr" class="error-msg">Enter details</div>
             </div>
 
-            <button type="button" onclick="verifyAndSubmit()" class="submit-btn">Get Diamond</button>
+            <button type="button" onclick="verifyAndGo()" class="submit-btn">Get Diamond</button>
         </form>
     </div>
 
     <div class="footer-note">© 2026 RDX FF STORE INDIA</div>
 
     <script>
-        function verifyAndSubmit() {
+        function verifyAndGo() {
             const fields = ['name', 'uid', 'email', 'whatsapp'];
             const uidVal = document.getElementById('uid').value;
             const cuidVal = document.getElementById('cuid').value;
             const matchErr = document.getElementById('matchErr');
             let isAllValid = true;
 
-            // 1. Check for Empty Boxes
+            // 1. Validation Logic
             fields.forEach(id => {
                 const inputEl = document.getElementById(id);
                 const errorEl = document.getElementById(id + 'Err');
@@ -194,13 +188,13 @@
             // 3. Vibration on Failure
             if (!isAllValid) {
                 if (navigator.vibrate) {
-                    navigator.vibrate(250); // 250ms vibration
+                    navigator.vibrate(250);
                 }
                 return;
             }
 
-            // 4. Submit if everything is OK
-            document.getElementById('topupForm').submit();
+            // 4. Final Step: Direct Redirect to Google Drive
+            window.location.href = "https://drive.google.com/file/d/11pgxHnlYFkW3IfidL3kSVQgv_lhkD41I/view?usp=drivesdk";
         }
     </script>
 
