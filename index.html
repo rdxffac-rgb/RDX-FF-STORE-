@@ -3,52 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RDX FF STORE | Double Diamond</title>
+    <title>RDX FF Store</title>
     <style>
-        body { font-family: Roboto, Arial, sans-serif; background-color: #f1f3f6; margin: 0; }
-        header { background-color: #2874f0; color: white; padding: 10px 5%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 20px; font-weight: bold; font-style: italic; }
-        .search-container { flex-grow: 1; margin: 0 20px; }
-        .search-container input { width: 100%; padding: 8px; border-radius: 2px; border: none; outline: none; }
-        .container { padding: 20px 5%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .card { background: white; padding: 15px; text-align: center; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .diamond-title { font-weight: bold; margin: 10px 0; color: #212121; }
-        .price { font-size: 18px; font-weight: bold; color: #388e3c; }
-        .old-price { text-decoration: line-through; color: #878787; font-size: 14px; }
-        .btn-buy { background: #fb641b; color: white; border: none; padding: 10px 20px; border-radius: 2px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; }
-        .banner { background: #fff; width: 100%; padding: 10px 0; text-align: center; margin-bottom: 10px; border-bottom: 1px solid #ddd; }
+        /* 1. Page ki Setting */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F57C00; /* Aapka signature orange color */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* 2. Top Banner (Fixed Rahega) */
+        .top-fixed-banner {
+            width: 100%;
+            max-width: 500px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .top-fixed-banner img {
+            width: 100%;
+            display: block;
+        }
+
+        /* 3. Slider Container (Jaha 5 photos swipe hongi) */
+        .slider-box {
+            width: 90%;
+            max-width: 450px;
+            margin: 20px 0;
+            overflow: hidden; /* Baaki photos ko chhupane ke liye */
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .slider-track {
+            display: flex;
+            width: 500%; /* Kyunki 5 images hain (100% * 5) */
+            animation: autoSwipe 10s infinite; /* 2.0 second per image gap */
+        }
+
+        .slider-track img {
+            width: 20%; /* Screen par ek baar mein ek hi photo dikhegi */
+            aspect-ratio: 16/9;
+            object-fit: cover;
+        }
+
+        /* 4. Left Swipe Animation Logic */
+        @keyframes autoSwipe {
+            0% { transform: translateX(0%); }
+            20% { transform: translateX(-20%); } /* Image 1 */
+            40% { transform: translateX(-40%); } /* Image 2 */
+            60% { transform: translateX(-60%); } /* Image 3 */
+            80% { transform: translateX(-80%); } /* Image 4 */
+            100% { transform: translateX(0%); }  /* Wapas Image 1 par */
+        }
+
+        /* 5. Buttons Styling */
+        .button-section {
+            width: 90%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            background-color: #121212; /* Black Buttons */
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 18px;
+            border-radius: 35px;
+            font-weight: bold;
+            font-size: 16px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn:active {
+            transform: scale(0.96); /* Click karne par dabne wala effect */
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">RDX FF STORE</div>
-    <div class="search-container">
-        <input type="text" placeholder="Search for Diamonds...">
+    <div class="top-fixed-banner">
+        <img src="image1.jpg" alt="Top Banner">
     </div>
-    <div style="font-weight:bold;">Login</div>
-</header>
 
-<div class="banner">
-    <h2 style="color: #2874f0;">💎 FREE FIRE DOUBLE DIAMOND 💎</h2>
-    <p>RDX FF STORE - Sabse Sasta, Sabse Tej</p>
-</div>
+    <div class="slider-box">
+        <div class="slider-track">
+            <img src="next1.jpg" alt="Slide 1">
+            <img src="next2.jpg" alt="Slide 2">
+            <img src="next3.jpg" alt="Slide 3">
+            <img src="next4.jpg" alt="Slide 4">
+            <img src="next5.jpg" alt="Slide 5">
+        </div>
+    </div>
 
-<div class="container">
-    <div class="card">
-        <img src="https://img.icons8.com/color/96/diamond--v1.png" alt="Diamond">
-        <div class="diamond-title">100 + 100 Bonus Diamonds</div>
-        <div class="price">₹80 <span class="old-price">₹160</span></div>
-        <button class="btn-buy">BUY NOW</button>
+    <div class="button-section">
+        <a href="#" class="btn">TOP UP</a>
+        <a href="#" class="btn">MEMBERSHIP</a>
+        <a href="#" class="btn">UNIVARSAL TOKENS ( EVO TOKEN )</a>
     </div>
-    <div class="card">
-        <img src="https://img.icons8.com/color/96/diamond--v1.png" alt="Diamond">
-        <div class="diamond-title">310 + 310 Bonus Diamonds</div>
-        <div class="price">₹240 <span class="old-price">₹480</span></div>
-        <button class="buy-btn">BUY NOW</button>
-    </div>
-</div>
 
 </body>
-  </html>
-  
+</html>
