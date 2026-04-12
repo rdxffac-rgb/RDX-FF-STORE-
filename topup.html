@@ -5,22 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diamond Topup | RDX Store</title>
     <style>
-        /* --- Page Base --- */
         body {
             margin: 0;
             padding: 0;
-            background-color: #ffffff; /* Pure White Background */
+            background-color: #ffffff;
             font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             color: #333;
+            overflow-x: hidden;
         }
 
-        /* --- Header --- */
         .header-title {
             width: 100%;
-            background-color: #F57C00; /* Main Orange Color */
+            background-color: #F57C00;
             color: white;
             text-align: center;
             padding: 20px 0;
@@ -31,14 +30,13 @@
             margin-bottom: 30px;
         }
 
-        /* --- Diamond Card Grid --- */
         .grid-container {
             width: 92%;
             max-width: 500px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         .card {
@@ -47,90 +45,101 @@
             border-radius: 15px;
             padding: 25px 10px;
             text-align: center;
-            border: 2px solid #F57C00; /* Orange Border */
+            border: 2px solid #F57C00;
             box-shadow: 0 6px 15px rgba(245, 124, 0, 0.15);
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.2s;
         }
 
-        .card:active {
-            transform: scale(0.97);
-        }
-
-        /* --- Text & Price --- */
         .diamond-amount {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: bold;
-            color: #2ecc71; /* Green for Diamonds */
+            color: #2ecc71;
             margin-top: 10px;
         }
 
         .price-text {
             font-size: 22px;
-            margin: 12px 0;
+            margin: 10px 0;
             font-weight: 900;
-            color: #F57C00; /* Orange for Price */
+            color: #F57C00;
         }
 
-        /* --- Get Diamond Button --- */
         .get-btn {
-            background-color: #2ecc71; /* Green Button */
+            background-color: #2ecc71;
             color: white;
             text-decoration: none;
             font-size: 13px;
             font-weight: bold;
-            padding: 12px 0;
+            padding: 10px 0;
             border-radius: 10px;
             width: 90%;
             text-transform: uppercase;
-            box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
         }
 
-        /* --- Popular Blinking Tag (400 Rs Pack) --- */
+        /* Hot Tag */
         .hot-tag {
             position: absolute;
             top: -12px;
             right: -5px;
-            background: linear-gradient(45deg, #FFD700, #FFA000); /* Golden Tag */
+            background: linear-gradient(45deg, #FFD700, #FFA000);
             color: #000;
             font-size: 10px;
             font-weight: 900;
             padding: 6px 12px;
             border-radius: 20px;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
-            text-transform: uppercase;
             animation: blinker 1s linear infinite;
             z-index: 10;
         }
 
-        @keyframes blinker {
-            50% { opacity: 0.3; transform: scale(1.05); }
+        @keyframes blinker { 50% { opacity: 0.3; } }
+
+        /* --- Live Notification Styling --- */
+        .notification-container {
+            width: 90%;
+            max-width: 400px;
+            height: 40px;
+            background-color: #f0fff0;
+            border: 1px solid #2ecc71;
+            border-radius: 25px;
+            margin: 20px 0 40px 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .special-card {
-            background-color: #fffaf0; /* Light Orange hint for special pack */
-            border-width: 3px;
+        .notif-track {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.8s ease-in-out;
         }
 
-        /* --- Footer Back Link --- */
+        .notif-item {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 13px;
+            text-align: center;
+        }
+
         .back-home {
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             color: #F57C00;
             text-decoration: none;
             font-weight: bold;
             border-bottom: 2px solid #F57C00;
-            padding-bottom: 2px;
         }
     </style>
 </head>
 <body>
 
-    <div class="header-title">Diamond Shop</div>
+    <div class="header-title">RDX Diamond Shop</div>
 
     <div class="grid-container">
-        
         <div class="card">
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">200 Diamonds</div>
@@ -142,10 +151,17 @@
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">310 Diamonds</div>
             <div class="price-text">₹120</div>
-            <a href="nexttop2.html" class="get-btn">Get Diamond</a>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
 
-        <div class="card special-card">
+        <div class="card">
+            <span style="font-size: 35px;">💎</span>
+            <div class="diamond-amount">1000 Diamonds</div>
+            <div class="price-text">₹349</div>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
+        </div>
+
+        <div class="card">
             <div class="hot-tag">🔥 HOT</div>
             <span style="font-size: 35px;">💎</span>
             <div class="diamond-amount">1120 Diamonds</div>
@@ -160,10 +176,54 @@
             <a href="nexttop1.html" class="get-btn">Get Diamond</a>
         </div>
 
+        <div class="card">
+            <span style="font-size: 35px;">💎</span>
+            <div class="diamond-amount">2800 Diamonds</div>
+            <div class="price-text">₹1000</div>
+            <a href="nexttop1.html" class="get-btn">Get Diamond</a>
+        </div>
+    </div>
+
+    <div class="notification-container">
+        <div class="notif-track" id="notifTrack">
+            <div class="notif-item">✅ पवन_yt top up 200 diamonds 💎</div>
+        </div>
     </div>
 
     <a href="index.html" class="back-home">← GO BACK</a>
 
-</body>
-  </html>
+    <script>
+        const names = ["Aman_ff", "Raj_Gaming", "Sumit_YT", "Vicky_07", "Rahul_King", "Deepak_99", "Pawan_yt", "Ankit_ff", "Sameer_ff", "Karan_Gamer", "Lucky_yt", "Arjun_ff", "Rohan_ff", "Amit_ff", "Sonu_gamer", "Monu_yt", "Gaurav_ff", "Sunny_07", "Kapil_ff", "Bunny_yt"];
+        const amounts = ["200", "310", "1000", "1120", "2180", "2800"];
+        
+        const track = document.getElementById('notifTrack');
 
+        function updateNotification() {
+            const randomName = names[Math.floor(Math.random() * names.length)];
+            const randomAmount = amounts[Math.floor(Math.random() * amounts.length)];
+            
+            // Naya item add karna
+            const newItem = document.createElement('div');
+            newItem.className = 'notif-item';
+            newItem.innerHTML = `✅ ${randomName} top up ${randomAmount} diamonds 💎`;
+            track.appendChild(newItem);
+
+            // Swipe Up Animation
+            track.style.transform = 'translateY(-40px)';
+
+            // Purana item remove karna animation ke baad
+            setTimeout(() => {
+                track.style.transition = 'none';
+                track.removeChild(track.firstElementChild);
+                track.style.transform = 'translateY(0)';
+                setTimeout(() => {
+                    track.style.transition = 'transform 0.8s ease-in-out';
+                }, 50);
+            }, 800);
+        }
+
+        // Har 6 second mein update hoga
+        setInterval(updateNotification, 6000);
+    </script>
+</body>
+</html>
