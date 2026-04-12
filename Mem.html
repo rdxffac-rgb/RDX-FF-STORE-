@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FF Membership | Premium Gold Shop</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff; /* White base */
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+
+        /* --- Golden Header --- */
+        .header-title {
+            width: 100%;
+            background: linear-gradient(135deg, #FFD700, #D4AF37, #B8860B);
+            color: #000;
+            text-align: center;
+            padding: 25px 0;
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        /* --- Cards Grid --- */
+        .grid-container {
+            width: 92%;
+            max-width: 500px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .gold-card {
+            position: relative;
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-align: center;
+            border: 2px solid #D4AF37;
+            box-shadow: 0 8px 20px rgba(184, 134, 11, 0.2);
+            overflow: hidden; /* Shine animation ke liye */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Shining Animation --- */
+        .gold-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 100%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: rotate(30deg);
+            animation: goldShine 4s infinite linear;
+        }
+
+        @keyframes goldShine {
+            0% { left: -100%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .member-icon {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+
+        .duration-text {
+            font-size: 15px;
+            font-weight: 700;
+            color: #B8860B; /* Dark Gold */
+            margin-bottom: 8px;
+        }
+
+        .price-text {
+            font-size: 22px;
+            font-weight: 900;
+            color: #000;
+            margin-bottom: 15px;
+        }
+
+        /* --- Subscribe Button --- */
+        .sub-btn {
+            background: linear-gradient(135deg, #1a1a1a, #333);
+            color: #FFD700; /* Gold Text on Black */
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 800;
+            padding: 12px 0;
+            border-radius: 8px;
+            width: 90%;
+            text-transform: uppercase;
+            border: 1px solid #FFD700;
+            transition: 0.3s;
+            z-index: 5;
+        }
+
+        .sub-btn:active {
+            transform: scale(0.95);
+            background: #FFD700;
+            color: #000;
+        }
+
+        .back-link {
+            margin-bottom: 40px;
+            color: #B8860B;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-title">Monthly Subscription</div>
+
+    <div class="grid-container">
+        
+        <div class="gold-card">
+            <div class="member-icon">🎫</div>
+            <div class="duration-text">1 Month</div>
+            <div class="price-text">₹400</div>
+            <a href="mem1.html" class="sub-btn">Subscribe</a>
+        </div>
+
+        <div class="gold-card">
+            <div class="member-icon">🎫</div>
+            <div class="duration-text">2 Months</div>
+            <div class="price-text">₹750</div>
+            <a href="mem1.html" class="sub-btn">Subscribe</a>
+        </div>
+
+        <div class="gold-card">
+            <div class="member-icon">🎫</div>
+            <div class="duration-text">3 Months</div>
+            <div class="price-text">₹1100</div>
+            <a href="mem1.html" class="sub-btn">Subscribe</a>
+        </div>
+
+        <div class="gold-card">
+            <div class="member-icon">💎</div>
+            <div class="duration-text">6 Months</div>
+            <div class="price-text">₹2100</div>
+            <a href="mem1.html" class="sub-btn">Subscribe</a>
+        </div>
+
+        <div class="gold-card">
+            <div class="member-icon">👑</div>
+            <div class="duration-text">9 Months</div>
+            <div class="price-text">₹2900</div>
+            <a href="mem1.html" class="sub-btn">Subscribe</a>
+        </div>
+
+        <div class="gold-card">
+            <div class="member-icon">🔱</div>
+            <div class="duration-text">1 Year</div>
+            <div class="price-text">₹3500</div>
+            <a href="mem1.html" class="sub-btn">Subscribe</a>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="back-link">← GO BACK TO HOME</a>
+
+</body>
+      </html>
+      
