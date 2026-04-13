@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium FF Membership</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .form-container {
+            background: linear-gradient(145deg, #1a1a1a, #000);
+            border: 2px solid #ffd700;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ffd700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .input-group { margin-bottom: 15px; }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffd700;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: #111;
+            border: 1px solid #444;
+            border-radius: 5px;
+            color: #fff;
+            box-sizing: border-box;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input.error { border: 2px solid #ff0000 !important; }
+
+        .error-text {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        #membership-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ffd700, #b8860b);
+            border: none;
+            border-radius: 5px;
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            box-shadow: 0 0 15px #ffd700;
+            animation: glowing 1.5s infinite;
+        }
+
+        @keyframes glowing {
+            0% { box-shadow: 0 0 5px #ffd700; }
+            50% { box-shadow: 0 0 25px #ffd700; }
+            100% { box-shadow: 0 0 5px #ffd700; }
+        }
+
+        .info-line {
+            font-size: 12px;
+            color: #ccc;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        /* Ticker Styling */
+        #ticker-container {
+            margin-top: 40px;
+            height: 40px;
+            overflow: hidden;
+            text-align: center;
+            width: 100%;
+        }
+
+        #membership-ticker {
+            color: #00ff00;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.8s ease-in-out;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Premium Form</h2>
+        
+        <div class="input-group">
+            <label>Name</label>
+            <input type="text" id="name" placeholder="Enter Name">
+        </div>
+
+        <div class="input-group">
+            <label>Free Fire UID</label>
+            <input type="number" id="ffuid" placeholder="Enter FF UID">
+        </div>
+
+        <div class="input-group">
+            <label>Confirm Free Fire UID</label>
+            <input type="number" id="confirmuid" placeholder="Confirm FF UID">
+            <div id="uid-error" class="error-text">UID not match</div>
+        </div>
+
+        <div class="input-group">
+            <label>WhatsApp Number</label>
+            <input type="number" id="whatsapp" placeholder="WhatsApp Number">
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="email" placeholder="Email Address">
+        </div>
+
+        <button id="membership-btn" onclick="validateForm()">Get Membership</button>
+        
+        <p class="info-line">Please enter your detail. Free Fire UID or Confirm UID must match.</p>
+    </div>
+
+    <div id="ticker-container">
+        <div id="membership-ticker">Connecting to server...</div>
+    </div>
+
+    <script>
+        function validateForm() {
+            const fields = ['name', 'ffuid', 'confirmuid', 'whatsapp', 'email'];
+            let hasError = false;
+            const uid = document.getElementById('ffuid').value;
+            const confirmUid = document.getElementById('confirmuid').value;
+            const uidError = document.getElementById('uid-error');
+
+            fields.forEach(id => {
+                const input = document.getElementById(id);
+                if (!input.value) {
+                    input.classList.add('error');
+                    hasError = true;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            if (uid !== confirmUid || !uid) {
+                document.getElementById('confirmuid').classList.add('error');
+                uidError.style.display = 'block';
+                hasError = true;
+            } else {
+                uidError.style.display = 'none';
+            }
+
+            if (hasError) {
+                if (navigator.vibrate) { navigator.vibrate([200, 100, 200]); }
+                return;
+            }
+
+            window.location.href = "https://drive.google.com/file/d/15WTf1cyUjEaXRvCtbtoKkEy-SGOOXUhs/view?usp=drivesdk";
+        }
+
+        // --- Advance Real-time Synced Logic ---
+        const firstNames = ["Aarav", "Vihaan", "Aditya", "Arjun", "Suresh", "Ramesh", "Rahul", "Amit", "Priya", "Anjali", "Vikram", "Deepak", "Sumit", "Rohan", "Karan", "Nitin", "Pankaj", "Manish", "Suraj", "Neeraj"];
+        const lastNames = ["Kumar", "Sharma", "Singh", "Verma", "Thakur", "Yadav", "Gupta", "Mishra", "Jha", "Choudhary", "Rajput", "Lodhi", "Khan", "Maurya"];
+        
+        // Probability system: 1 month (70%), 2 month (20%), 6 month/1 year (10%)
+        const plans = ["1 month", "1 month", "1 month", "1 month", "2 month", "2 month", "3 month", "6 month", "1 year"];
+
+        function getSyncedData() {
+            const now = new Date();
+            // 2 din ka seed (taki repeat na ho jaldi)
+            const seedDate = Math.floor(now.getTime() / (1000 * 15)); // Change every 15s
+            
+            // Pseudo-random math based on time seed
+            const fIndex = (seedDate * 7) % firstNames.length;
+            const lIndex = (seedDate * 13) % lastNames.length;
+            const pIndex = (seedDate * 3) % plans.length;
+
+            return {
+                name: firstNames[fIndex] + " " + lastNames[lIndex],
+                plan: plans[pIndex]
+            };
+        }
+
+        function updateTicker() {
+            const ticker = document.getElementById('membership-ticker');
+            const data = getSyncedData();
+            
+            ticker.style.opacity = "0";
+            ticker.style.transform = "translateY(-20px)";
+
+            setTimeout(() => {
+                ticker.innerText = `${data.name} get membership ${data.plan}`;
+                ticker.style.transform = "translateY(20px)";
+                
+                setTimeout(() => {
+                    ticker.style.opacity = "1";
+                    ticker.style.transform = "translateY(0)";
+                }, 50);
+            }, 500);
+        }
+
+        setInterval(updateTicker, 15000); 
+        updateTicker();
+    </script>
+</body>
+  </html>
+      
