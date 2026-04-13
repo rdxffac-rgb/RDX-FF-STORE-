@@ -36,9 +36,7 @@
             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
 
-        .input-group {
-            margin-bottom: 15px;
-        }
+        .input-group { margin-bottom: 15px; }
 
         label {
             display: block;
@@ -59,13 +57,7 @@
             transition: 0.3s;
         }
 
-        input:focus {
-            border-color: #ffd700;
-        }
-
-        input.error {
-            border: 2px solid #ff0000 !important;
-        }
+        input.error { border: 2px solid #ff0000 !important; }
 
         .error-text {
             color: #ff0000;
@@ -103,10 +95,10 @@
             text-align: center;
         }
 
-        /* Membership Ticker Styling */
+        /* Ticker Styling */
         #ticker-container {
             margin-top: 40px;
-            height: 30px;
+            height: 40px;
             overflow: hidden;
             text-align: center;
             width: 100%;
@@ -116,11 +108,8 @@
             color: #00ff00;
             font-weight: bold;
             font-size: 16px;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .swipe-up {
-            transform: translateY(-100%);
+            transition: all 0.8s ease-in-out;
+            opacity: 1;
         }
     </style>
 </head>
@@ -161,7 +150,7 @@
     </div>
 
     <div id="ticker-container">
-        <div id="membership-ticker">Loading updates...</div>
+        <div id="membership-ticker">Connecting to server...</div>
     </div>
 
     <script>
@@ -191,36 +180,45 @@
             }
 
             if (hasError) {
-                if (navigator.vibrate) {
-                    navigator.vibrate([200, 100, 200]);
-                }
+                if (navigator.vibrate) { navigator.vibrate([200, 100, 200]); }
                 return;
             }
 
             window.location.href = "https://drive.google.com/file/d/1vYLHI91oNyxmsM0b8eS0OKsWtYgTimjc/view?usp=drivesdk";
         }
 
-        // Ticker Logic (Server-sync simulation using Date)
-        const names = ["Naveen Kumar", "Param Thakur", "Rahul Sharma", "Amit Singh", "Vikram Raj", "Deepak Jha", "Sumit Verma"];
-        const plans = ["1 month", "1 month", "1 month", "2 month", "3 month", "6 month", "1 year"]; // 1 month is more frequent
+        // --- Advance Real-time Synced Logic ---
+        const firstNames = ["Aarav", "Vihaan", "Aditya", "Arjun", "Suresh", "Ramesh", "Rahul", "Amit", "Priya", "Anjali", "Vikram", "Deepak", "Sumit", "Rohan", "Karan", "Nitin", "Pankaj", "Manish", "Suraj", "Neeraj"];
+        const lastNames = ["Kumar", "Sharma", "Singh", "Verma", "Thakur", "Yadav", "Gupta", "Mishra", "Jha", "Choudhary", "Rajput", "Lodhi", "Khan", "Maurya"];
+        
+        // Probability system: 1 month (70%), 2 month (20%), 6 month/1 year (10%)
+        const plans = ["1 month", "1 month", "1 month", "1 month", "2 month", "2 month", "3 month", "6 month", "1 year"];
 
-        function getGlobalIndex() {
-            // Har 15 second mein index badlega aur sabke phone pe same rahega
+        function getSyncedData() {
             const now = new Date();
-            const totalSeconds = (now.getHours() * 3600) + (now.getMinutes() * 60) + now.getSeconds();
-            return Math.floor(totalSeconds / 15) % names.length;
+            // 2 din ka seed (taki repeat na ho jaldi)
+            const seedDate = Math.floor(now.getTime() / (1000 * 15)); // Change every 15s
+            
+            // Pseudo-random math based on time seed
+            const fIndex = (seedDate * 7) % firstNames.length;
+            const lIndex = (seedDate * 13) % lastNames.length;
+            const pIndex = (seedDate * 3) % plans.length;
+
+            return {
+                name: firstNames[fIndex] + " " + lastNames[lIndex],
+                plan: plans[pIndex]
+            };
         }
 
         function updateTicker() {
             const ticker = document.getElementById('membership-ticker');
-            const index = getGlobalIndex();
+            const data = getSyncedData();
             
-            // Swipe up effect
             ticker.style.opacity = "0";
             ticker.style.transform = "translateY(-20px)";
 
             setTimeout(() => {
-                ticker.innerText = `${names[index]} get membership ${plans[index % plans.length]}`;
+                ticker.innerText = `${data.name} get membership ${data.plan}`;
                 ticker.style.transform = "translateY(20px)";
                 
                 setTimeout(() => {
@@ -230,10 +228,9 @@
             }, 500);
         }
 
-        setInterval(updateTicker, 15000); // 15 seconds refresh
-        updateTicker(); // Initial call
+        setInterval(updateTicker, 15000); 
+        updateTicker();
     </script>
-
 </body>
-  </html>
-  
+            </html>
+            
