@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RDX - Secure Payment</title>
+    <style>
+        body { background: #0a0a0a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .payment-box { background: #151515; max-width: 400px; margin: auto; border-radius: 20px; border: 1px solid #333; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative; }
+        
+        /* Timer */
+        .timer-box { background: linear-gradient(90deg, #ff4b2b, #ff8177); color: white; padding: 10px; border-radius: 12px; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
+        
+        /* QR Code */
+        .qr-container { background: white; padding: 15px; border-radius: 15px; display: inline-block; margin: 10px 0; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        #qr-code img { width: 220px; height: 220px; }
+
+        /* Professional Text Section */
+        .instruction-container { margin-top: 25px; padding: 15px; background: rgba(255, 75, 43, 0.05); border-radius: 12px; border: 1px dashed #444; }
+        .text-en { color: #00ffcc; font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+        .text-hi { color: #bbb; font-size: 13px; line-height: 1.5; }
+
+        .upi-id-badge { display: inline-block; margin-top: 15px; padding: 5px 15px; background: #222; border-radius: 20px; font-size: 12px; color: #888; border: 1px solid #333; }
+
+        /* Notification Styling */
+        #topup-notif {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 255, 204, 0.15);
+            color: #00ffcc;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 11px;
+            border: 1px solid rgba(0, 255, 204, 0.4);
+            backdrop-filter: blur(8px);
+            display: none;
+            z-index: 1000;
+            white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; bottom: 15px; }
+            15% { opacity: 1; bottom: 25px; }
+            85% { opacity: 1; bottom: 25px; }
+            100% { opacity: 0; bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="payment-box">
+        <div class="timer-box">
+            Expires in: <span id="timer">15:00</span>
+        </div>
+
+        <div style="font-size: 14px; color: #888; margin-bottom: 5px;">Scan to Pay ₹349 for 1000 Diamonds</div>
+        
+        <div class="qr-container">
+            <div id="qr-code"></div>
+        </div>
+
+        <div class="upi-id-badge">UPI ID: remeshwar6@fam</div>
+
+        <div class="instruction-container">
+            <div class="text-en">
+                Please wait 1-2 minutes for the diamonds (1000 💎) to be credited after payment. If not received, please restart your game.
+            </div>
+            <div class="text-hi">
+                भुगतान करने के बाद डायमंड्स (1000 💎) क्रेडिट होने में 1 से 2 मिनट का समय लग सकता है। यदि प्राप्त न हो, तो कृपया अपना गेम रीस्टार्ट करके चेक करें।
+            </div>
+        </div>
+        
+        <p style="font-size: 10px; color: #444; margin-top: 20px;">Secure Transaction by RDX Store</p>
+    </div>
+
+    <div id="topup-notif"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script>
+        // QR Code - Updated amount to 349
+        var upiLink = "upi://pay?pa=remeshwar6@fam&pn=RDX_STORE&am=349&cu=INR";
+        new QRCode(document.getElementById("qr-code"), {
+            text: upiLink,
+            width: 220,
+            height: 220
+        });
+
+        // Timer Logic
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) { timer = 0; }
+            }, 1000);
+        }
+
+        // Notification System
+        const names = ["Rakesh", "Amit", "Rahul", "Suresh", "Vikram", "Deepak", "Anil", "Sumit", "Priyanshu", "Karan", "Nitin", "Sahil", "Tushar", "Gaurav", "Manish", "Abhishek", "Rohan", "Sunny", "Vivek", "Suraj"];
+        
+        function showNotification() {
+            const now = new Date();
+            const timestamp = now.getTime();
+            
+            const timeBlock = Math.floor(timestamp / 12000); 
+            const nameIndex = timeBlock % names.length;
+            
+            const notif = document.getElementById('topup-notif');
+            // Notification also updated to 1000 diamonds
+            notif.innerText = `✅ ${names[nameIndex]} just topped up 1000 diamonds`;
+            
+            notif.style.display = 'block';
+            notif.style.animation = "fadeInOut 4s forwards";
+            
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 4000);
+        }
+
+        setInterval(() => {
+            const now = new Date();
+            if (now.getTime() % 12000 < 1000) { 
+                showNotification();
+            }
+        }, 1000);
+
+        window.onload = function () {
+            startTimer(60 * 15, document.querySelector('#timer'));
+        };
+    </script>
+</body>
+</html>
