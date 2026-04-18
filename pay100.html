@@ -6,7 +6,7 @@
     <title>RDX - Secure Payment</title>
     <style>
         body { background: #0a0a0a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .payment-box { background: #151515; max-width: 400px; margin: auto; border-radius: 20px; border: 1px solid #333; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative; overflow: hidden; }
+        .payment-box { background: #151515; max-width: 400px; margin: auto; border-radius: 20px; border: 1px solid #333; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative; }
         
         /* Timer */
         .timer-box { background: linear-gradient(90deg, #ff4b2b, #ff8177); color: white; padding: 10px; border-radius: 12px; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
@@ -25,26 +25,27 @@
         /* Notification Styling (Small Text) */
         #topup-notif {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 255, 204, 0.1);
+            background: rgba(0, 255, 204, 0.15);
             color: #00ffcc;
-            padding: 6px 15px;
+            padding: 8px 18px;
             border-radius: 30px;
-            font-size: 11px; /* Chota Text */
-            border: 1px solid rgba(0, 255, 204, 0.3);
-            backdrop-filter: blur(5px);
+            font-size: 11px;
+            border: 1px solid rgba(0, 255, 204, 0.4);
+            backdrop-filter: blur(8px);
             display: none;
             z-index: 1000;
             white-space: nowrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         @keyframes fadeInOut {
-            0% { opacity: 0; bottom: 10px; }
-            20% { opacity: 1; bottom: 20px; }
-            80% { opacity: 1; bottom: 20px; }
-            100% { opacity: 0; bottom: 10px; }
+            0% { opacity: 0; bottom: 15px; }
+            15% { opacity: 1; bottom: 25px; }
+            85% { opacity: 1; bottom: 25px; }
+            100% { opacity: 0; bottom: 15px; }
         }
     </style>
 </head>
@@ -101,33 +102,33 @@
             }, 1000);
         }
 
-        // Notification System (Synchronized using Time)
-        const names = ["Rakesh", "Amit", "Rahul", "Suresh", "Vikram", "Deepak", "Anil", "Sumit", "Priyanshu", "Karan", "Nitin", "Sahil", "Tushar", "Gaurav", "Manish"];
+        // Notification System
+        const names = ["Rakesh", "Amit", "Rahul", "Suresh", "Vikram", "Deepak", "Anil", "Sumit", "Priyanshu", "Karan", "Nitin", "Sahil", "Tushar", "Gaurav", "Manish", "Abhishek", "Rohan", "Sunny", "Vivek", "Suraj"];
         
         function showNotification() {
             const now = new Date();
             const timestamp = now.getTime();
             
-            // Seed logic: Ye ensure karta hai ki har 10 second ke block mein sabko same naam dikhe
-            const timeBlock = Math.floor(timestamp / 10000); 
+            // 12 second cycle (4s show + 8s gap)
+            const timeBlock = Math.floor(timestamp / 12000); 
             const nameIndex = timeBlock % names.length;
             
             const notif = document.getElementById('topup-notif');
             notif.innerText = `✅ ${names[nameIndex]} just topped up 200 diamonds`;
             
-            // Show for 2 seconds
             notif.style.display = 'block';
-            notif.style.animation = "fadeInOut 2s forwards";
+            notif.style.animation = "fadeInOut 4s forwards"; // 4 second animation
             
             setTimeout(() => {
                 notif.style.display = 'none';
-            }, 2000);
+            }, 4000); // 4 second baad remove
         }
 
-        // Interval: Check every second, show exactly on 10s intervals
+        // Sync check every second
         setInterval(() => {
-            const seconds = new Date().getSeconds();
-            if (seconds % 10 === 0) { // Har 10th second par sabke phone mein ek saath aayega
+            const now = new Date();
+            // Har 12th second par start hoga (synchronized)
+            if (now.getTime() % 12000 < 1000) { 
                 showNotification();
             }
         }, 1000);
