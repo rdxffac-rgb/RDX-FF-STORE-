@@ -3,95 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Center - RDX</title>
+    <title>RDX - Secure Payment</title>
     <style>
-        body { background: #0f0f0f; color: white; font-family: sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .payment-box { background: #1a1a1a; max-width: 400px; margin: auto; border-radius: 20px; border: 1px solid #333; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body { background: #0a0a0a; color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .payment-box { background: #151515; max-width: 400px; margin: auto; border-radius: 20px; border: 1px solid #333; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); position: relative; overflow: hidden; }
         
-        /* Timer Style */
-        .timer-box { background: #ff4b2b; color: white; padding: 10px; border-radius: 10px; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
+        /* Timer */
+        .timer-box { background: linear-gradient(90deg, #ff4b2b, #ff8177); color: white; padding: 10px; border-radius: 12px; font-weight: bold; font-size: 18px; margin-bottom: 20px; }
         
-        .order-info { background: #252525; padding: 15px; border-radius: 15px; text-align: left; margin-bottom: 20px; }
-        .row { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; }
-        .price { color: #00ffcc; font-weight: bold; font-size: 18px; }
+        /* QR Code */
+        .qr-container { background: white; padding: 15px; border-radius: 15px; display: inline-block; margin: 10px 0; box-shadow: 0 0 20px rgba(255,255,255,0.1); }
+        #qr-code img { width: 220px; height: 220px; }
 
-        /* QR Code Design */
-        .qr-container { background: white; padding: 15px; border-radius: 15px; display: inline-block; position: relative; margin-bottom: 15px; }
-        #qr-code img { width: 200px; height: 200px; }
-        .qr-logo { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; background: white; padding: 2px; border-radius: 5px; }
+        /* Professional Text Section */
+        .instruction-container { margin-top: 25px; padding: 15px; background: rgba(255, 75, 43, 0.05); border-radius: 12px; border: 1px dashed #444; }
+        .text-en { color: #00ffcc; font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.4; }
+        .text-hi { color: #bbb; font-size: 13px; line-height: 1.5; }
 
-        .upi-id { background: #333; padding: 10px; border-radius: 10px; font-size: 13px; color: #aaa; margin-bottom: 20px; }
-        .pay-btn { background: #ff4b2b; color: white; border: none; width: 100%; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 16px; cursor: pointer; text-decoration: none; display: block; }
-        .disabled { background: #555 !important; cursor: not-allowed; }
+        .upi-id-badge { display: inline-block; margin-top: 15px; padding: 5px 15px; background: #222; border-radius: 20px; font-size: 12px; color: #888; border: 1px solid #333; }
+
+        /* Notification Styling (Small Text) */
+        #topup-notif {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 255, 204, 0.1);
+            color: #00ffcc;
+            padding: 6px 15px;
+            border-radius: 30px;
+            font-size: 11px; /* Chota Text */
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            backdrop-filter: blur(5px);
+            display: none;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; bottom: 10px; }
+            20% { opacity: 1; bottom: 20px; }
+            80% { opacity: 1; bottom: 20px; }
+            100% { opacity: 0; bottom: 10px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="payment-box">
         <div class="timer-box">
-            Payment expires in: <span id="timer">15:00</span>
+            Expires in: <span id="timer">15:00</span>
         </div>
 
-        <div class="order-info">
-            <div class="row"><span>Product:</span> <span>Free Fire Diamonds</span></div>
-            <div class="row"><span>Quantity:</span> <span>💎 200 Diamonds</span></div>
-            <div class="row"><span>Total Payable:</span> <span class="price">₹100.00</span></div>
-        </div>
-
-        <p style="font-size: 12px; color: #888;">Scan QR Code to Pay ₹100</p>
+        <div style="font-size: 14px; color: #888; margin-bottom: 5px;">Scan to Pay ₹100</div>
         
         <div class="qr-container">
             <div id="qr-code"></div>
-            <img src="https://i.ibb.co/vY8p079/diamond-icon.png" class="qr-logo">
         </div>
 
-        <div class="upi-id">UPI ID: remeshwar6@fam</div>
+        <div class="upi-id-badge">UPI ID: remeshwar6@fam</div>
 
-        <a href="upi://pay?pa=remeshwar6@fam&pn=RDX_STORE&am=100&cu=INR" class="pay-btn" id="pay-button">PAY NOW ₹100</a>
+        <div class="instruction-container">
+            <div class="text-en">
+                Please wait 1-2 minutes for the diamonds to be credited after payment. If not received, please restart your game.
+            </div>
+            <div class="text-hi">
+                भुगतान करने के बाद डायमंड्स क्रेडिट होने में 1 से 2 मिनट का समय लग सकता है। यदि प्राप्त न हो, तो कृपया अपना गेम रीस्टार्ट करके चेक करें।
+            </div>
+        </div>
         
-        <p style="font-size: 11px; color: #555; margin-top: 15px;">© Garena Online. All rights reserved.</p>
+        <p style="font-size: 10px; color: #444; margin-top: 20px;">Secure Transaction by RDX Store</p>
     </div>
+
+    <div id="topup-notif"></div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <script>
-        // QR Code Generation (Fixed for 100 Rs)
+        // QR Code
         var upiLink = "upi://pay?pa=remeshwar6@fam&pn=RDX_STORE&am=100&cu=INR";
         new QRCode(document.getElementById("qr-code"), {
             text: upiLink,
-            width: 200,
-            height: 200,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+            width: 220,
+            height: 220
         });
 
-        // 15 Minute Countdown Timer
+        // Timer Logic
         function startTimer(duration, display) {
             var timer = duration, minutes, seconds;
-            var countdown = setInterval(function () {
+            setInterval(function () {
                 minutes = parseInt(timer / 60, 10);
                 seconds = parseInt(timer % 60, 10);
-
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
-
                 display.textContent = minutes + ":" + seconds;
-
-                if (--timer < 0) {
-                    clearInterval(countdown);
-                    display.textContent = "00:00";
-                    document.getElementById("pay-button").classList.add("disabled");
-                    document.getElementById("pay-button").innerText = "PAYMENT EXPIRED";
-                    document.getElementById("pay-button").href = "#";
-                }
+                if (--timer < 0) { timer = 0; }
             }, 1000);
         }
 
+        // Notification System (Synchronized using Time)
+        const names = ["Rakesh", "Amit", "Rahul", "Suresh", "Vikram", "Deepak", "Anil", "Sumit", "Priyanshu", "Karan", "Nitin", "Sahil", "Tushar", "Gaurav", "Manish"];
+        
+        function showNotification() {
+            const now = new Date();
+            const timestamp = now.getTime();
+            
+            // Seed logic: Ye ensure karta hai ki har 10 second ke block mein sabko same naam dikhe
+            const timeBlock = Math.floor(timestamp / 10000); 
+            const nameIndex = timeBlock % names.length;
+            
+            const notif = document.getElementById('topup-notif');
+            notif.innerText = `✅ ${names[nameIndex]} just topped up 200 diamonds`;
+            
+            // Show for 2 seconds
+            notif.style.display = 'block';
+            notif.style.animation = "fadeInOut 2s forwards";
+            
+            setTimeout(() => {
+                notif.style.display = 'none';
+            }, 2000);
+        }
+
+        // Interval: Check every second, show exactly on 10s intervals
+        setInterval(() => {
+            const seconds = new Date().getSeconds();
+            if (seconds % 10 === 0) { // Har 10th second par sabke phone mein ek saath aayega
+                showNotification();
+            }
+        }, 1000);
+
         window.onload = function () {
-            var fifteenMinutes = 60 * 15;
-            var display = document.querySelector('#timer');
-            startTimer(fifteenMinutes, display);
+            startTimer(60 * 15, document.querySelector('#timer'));
         };
     </script>
 </body>
