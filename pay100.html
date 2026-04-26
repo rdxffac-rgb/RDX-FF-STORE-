@@ -3,48 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Pay</title>
+    <title>RDX Store - Secure Diamond Topup</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        body { background: #0f172a; color: white; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: #1e293b; padding: 25px; border-radius: 20px; text-align: center; width: 350px; border: 1px solid #334155; }
-        .timer { color: #fbbf24; font-weight: bold; background: #0f172a; padding: 8px; border-radius: 10px; margin-bottom: 15px; }
-        .qr-bg { background: white; padding: 15px; border-radius: 15px; display: inline-block; }
-        .amount { font-size: 30px; font-weight: bold; color: #00d2ff; margin: 15px 0; }
-        .upi-id { font-size: 12px; color: #94a3b8; background: #0f172a; padding: 5px 10px; border-radius: 8px; }
-        .apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 20px; }
-        .apps img { width: 45px; height: 45px; background: white; border-radius: 10px; padding: 2px; }
-        .apps span { font-size: 10px; color: #94a3b8; display: block; margin-top: 5px; }
-        a { text-decoration: none; }
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --dark-bg: #0b0f19;
+            --card-bg: #161e2d;
+            --text-gray: #94a3b8;
+        }
+
+        body { 
+            background-color: var(--dark-bg); 
+            color: white; 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            padding: 20px 0;
+        }
+
+        .container { 
+            width: 90%; 
+            max-width: 420px; 
+            background: var(--card-bg); 
+            border-radius: 30px; 
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 25px; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+            text-align: center;
+        }
+
+        .timer-badge {
+            background: rgba(251, 191, 36, 0.15);
+            color: #fbbf24;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 14px;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .amount-text {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .qr-frame {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+            margin-bottom: 15px;
+        }
+
+        .upi-badge {
+            background: #0f172a;
+            padding: 8px 15px;
+            border-radius: 12px;
+            color: var(--text-gray);
+            font-size: 13px;
+            border: 1px solid #2d3748;
+            margin-bottom: 25px;
+        }
+
+        /* Payment Apps Grid */
+        .pay-header { font-size: 11px; color: #475569; letter-spacing: 2px; margin-bottom: 15px; }
+        .apps-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 30px; }
+        .app-btn { text-decoration: none; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .app-btn img { width: 48px; height: 48px; border-radius: 12px; background: white; padding: 2px; }
+        .app-btn span { font-size: 10px; color: var(--text-gray); }
+
+        /* Professional Trust Content */
+        .trust-section {
+            text-align: left;
+            background: rgba(255,255,255,0.03);
+            padding: 20px;
+            border-radius: 20px;
+            border-top: 2px solid var(--secondary);
+        }
+
+        .trust-item { margin-bottom: 15px; }
+        .trust-en { color: #e2e8f0; font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 4px; display: block; }
+        .trust-hi { color: #94a3b8; font-size: 12px; line-height: 1.5; display: block; }
+
+        .footer-secure {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #4ade80;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+        }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <div class="timer">Expires in: <span id="timer">15:00</span></div>
-    <div class="amount">₹100.00</div>
-    
-    <div class="qr-bg"><div id="qrcode"></div></div>
-    
-    <p><span class="upi-id">sunilkumar650@upi</span></p>
+<div class="container">
+    <div class="timer-badge">
+        ⏱️ Payment Session Expires: <span id="timer">15:00</span>
+    </div>
 
-    <div class="apps">
-        <a href="upi://pay?pa=sunilkumar650@upi&am=100&cu=INR"><img src="https://img.icons8.com/color/48/google-pay-india.png"><span>GPay</span></a>
-        <a href="upi://pay?pa=sunilkumar650@upi&am=100&cu=INR"><img src="https://img.icons8.com/color/48/phonepe.png"><span>PhonePe</span></a>
-        <a href="upi://pay?pa=sunilkumar650@upi&am=100&cu=INR"><img src="https://img.icons8.com/color/48/paytm.png"><span>Paytm</span></a>
-        <a href="upi://pay?pa=sunilkumar650@upi&am=100&cu=INR"><img src="https://img.icons8.com/color/48/bhim.png"><span>BHIM</span></a>
+    <div class="amount-text">₹100.00</div>
+
+    <div class="qr-frame">
+        <div id="qrcode"></div>
+    </div>
+
+    <div><span class="upi-badge">UPI ID: sunilkumar650@upi</span></div>
+
+    <div class="pay-header">CLICK TO PAY VIA APP</div>
+    <div class="apps-row">
+        <a href="upi://pay?pa=sunilkumar650@upi&pn=RDX_Store&am=100&cu=INR" class="app-btn">
+            <img src="https://img.icons8.com/color/96/google-pay-india.png"><span>GPay</span>
+        </a>
+        <a href="upi://pay?pa=sunilkumar650@upi&pn=RDX_Store&am=100&cu=INR" class="app-btn">
+            <img src="https://img.icons8.com/color/96/phonepe.png"><span>PhonePe</span>
+        </a>
+        <a href="upi://pay?pa=sunilkumar650@upi&pn=RDX_Store&am=100&cu=INR" class="app-btn">
+            <img src="https://img.icons8.com/color/96/paytm.png"><span>Paytm</span>
+        </a>
+        <a href="upi://pay?pa=sunilkumar650@upi&pn=RDX_Store&am=100&cu=INR" class="app-btn">
+            <img src="https://www.vectorlogo.zone/logos/npci_bhim/npci_bhim-icon.svg"><span>BHIM</span>
+        </a>
+    </div>
+
+    <div class="trust-section">
+        <div class="trust-item">
+            <span class="trust-en">💎 Diamonds will be credited instantly to your provided UID after successful payment.</span>
+            <span class="trust-hi">भुगतान सफल होते ही डायमंड्स आपके द्वारा दी गई UID पर तुरंत भेज दिए जाएंगे। बस भुगतान करें और डायमंड्स आपके अकाउंट में होंगे।</span>
+        </div>
+        
+        <div class="trust-item">
+            <span class="trust-en">🛡️ 100% Safe: No risk to your Main ID as we provide genuine diamonds from global servers.</span>
+            <span class="trust-hi">आपकी मेन आईडी को कोई खतरा नहीं है, क्योंकि हम ग्लोबल सर्वर के माध्यम से सुरक्षित डायमंड्स प्रदान करते हैं।</span>
+        </div>
+
+        <div class="trust-item" style="margin-bottom: 0;">
+            <span class="trust-en">🤝 Trust is our Identity. Serving gamers with excellence for the past 2 years.</span>
+            <span class="trust-hi">आपका विश्वास ही हमारी पहचान है। पिछले 2 वर्षों से लगातार भरोसे के साथ काम कर रहे हैं।</span>
+        </div>
+    </div>
+
+    <div class="footer-secure">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+        Fully Encrypted & Secure Payment by RDX
     </div>
 </div>
 
 <script>
-    const upi = "upi://pay?pa=sunilkumar650@upi&pn=RDX&am=100&cu=INR";
-    new QRCode(document.getElementById("qrcode"), { text: upi, width: 180, height: 180 });
+    // QR Code
+    const upiLink = "upi://pay?pa=sunilkumar650@upi&pn=RDX_Store&am=100&cu=INR";
+    new QRCode(document.getElementById("qrcode"), {
+        text: upiLink,
+        width: 180,
+        height: 180,
+        colorDark : "#000000",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.M
+    });
 
+    // Timer
     let time = 900;
+    const timerDisplay = document.getElementById("timer");
     setInterval(() => {
         let min = Math.floor(time / 60);
         let sec = time % 60;
-        document.getElementById("timer").innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        timerDisplay.innerText = `${min}:${sec < 10 ? '0' : ''}${sec}`;
         if (time > 0) time--;
     }, 1000);
 </script>
