@@ -368,19 +368,19 @@
             <form id="appealForm" novalidate>
                 <!-- UID Input -->
                 <div class="form-group">
-                    <label for="playerUid">Player UID Number</label>
+                    <label for="playerUid">ENTER YOUR BANNED UID</label>
                     <div class="input-wrapper">
                         <i class="fas fa-id-card"></i>
-                        <input type="text" id="playerUid" class="form-control" placeholder="Enter 8-11 digit Player UID" inputmode="numeric" autocomplete="off">
+                        <input type="text" id="playerUid" class="form-control" placeholder="Enter your banned UID" inputmode="numeric" autocomplete="off">
                     </div>
                 </div>
 
                 <!-- Gmail Input -->
                 <div class="form-group">
-                    <label for="playerEmail">Registered Email ID</label>
+                    <label for="playerEmail">ENTER YOUR CONTACT GMAIL</label>
                     <div class="input-wrapper">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="playerEmail" class="form-control" placeholder="Enter valid Gmail address" autocomplete="off">
+                        <input type="email" id="playerEmail" class="form-control" placeholder="Enter your contact Gmail" autocomplete="off">
                     </div>
                 </div>
 
@@ -456,7 +456,7 @@
                 uidInput.classList.remove('input-error');
             }
 
-            // 2. Email Validation (Valid email format checking for standard or Gmail format)
+            // 2. Email Validation (Valid standard/Gmail format)
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(emailVal)) {
                 emailInput.classList.add('input-error');
