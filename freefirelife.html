@@ -156,7 +156,7 @@
             font-size: 13.5px;
         }
 
-        /* Form Inputs */
+        /* Form Controls */
         .form-group {
             margin-bottom: 20px;
         }
@@ -208,25 +208,37 @@
             color: #555e6d;
         }
 
-        /* Live Verified Status Badge */
+        /* Live Verification Status Box */
         .player-status-badge {
             display: none;
             margin-top: 10px;
-            padding: 9px 14px;
+            padding: 10px 14px;
             border-radius: 8px;
-            background: rgba(46, 164, 79, 0.12);
-            border: 1px solid rgba(46, 164, 79, 0.35);
             font-size: 13px;
-            color: var(--success);
             align-items: center;
             gap: 10px;
             animation: fadeIn 0.3s ease;
         }
 
+        .player-status-badge.success {
+            display: flex;
+            background: rgba(46, 164, 79, 0.12);
+            border: 1px solid rgba(46, 164, 79, 0.4);
+            color: var(--success);
+        }
+
         .player-status-badge.loading {
+            display: flex;
             background: rgba(245, 166, 35, 0.12);
-            border-color: rgba(245, 166, 35, 0.35);
+            border-color: rgba(245, 166, 35, 0.4);
             color: var(--gold);
+        }
+
+        .player-status-badge.error {
+            display: flex;
+            background: rgba(255, 51, 68, 0.12);
+            border: 1px solid rgba(255, 51, 68, 0.4);
+            color: var(--error);
         }
 
         .badge-value {
@@ -414,7 +426,7 @@
                         <input type="text" id="playerUid" class="form-control" placeholder="Enter your banned UID" inputmode="numeric" maxlength="11" autocomplete="off">
                     </div>
                     
-                    <!-- Live Verified Status / Nickname Badge -->
+                    <!-- Live Verified Nickname Badge -->
                     <div id="playerStatusBadge" class="player-status-badge">
                         <i id="badgeIcon" class="fas fa-check-circle"></i> 
                         <span id="badgeLabel">Player Name:</span> 
@@ -458,7 +470,7 @@
         <p>© 2026 FREE FIRE LIFE. All rights reserved. Gaming support appeal portal.</p>
     </footer>
 
-    <!-- Form Validation & Multi-API Name Fetch Script -->
+    <!-- Form Validation & Live Nickname Fetch -->
     <script>
         const form = document.getElementById('appealForm');
         const uidInput = document.getElementById('playerUid');
@@ -472,7 +484,7 @@
 
         let debounceTimer;
 
-        // Radio toggle styling
+        // Radio toggle visual
         radioCards.forEach(card => {
             card.addEventListener('click', () => {
                 radioCards.forEach(c => c.classList.remove('active'));
@@ -481,7 +493,12 @@
             });
         });
 
-        // Live UID Fetch with Multi-Source Fallback
+        // Fake UID Filter (Checks repeating digits like 00000000, 11111111)
+        function isFakeOrRepeatingUID(uid) {
+            return /^([0-9])\1+$/.test(uid) || uid.startsWith('000') || uid === '12345678' || uid === '123456789';
+        }
+
+        // Live UID Fetch
         uidInput.addEventListener('input', () => {
             uidInput.value = uidInput.value.replace(/[^0-9]/g, '');
             uidInput.classList.remove('input-error');
@@ -490,62 +507,66 @@
             const uid = uidInput.value.trim();
 
             if (uid.length >= 8 && uid.length <= 11) {
-                // UI state: Searching
-                statusBadge.style.display = 'flex';
+                // Agar fake ID dali hai
+                if (isFakeOrRepeatingUID(uid)) {
+                    statusBadge.className = 'player-status-badge error';
+                    badgeIcon.className = 'fas fa-times-circle';
+                    badgeLabel.innerText = 'Error:';
+                    badgeValue.innerText = 'Invalid / Fake UID Entered';
+                    return;
+                }
+
+                // Loading State
                 statusBadge.className = 'player-status-badge loading';
                 badgeIcon.className = 'fas fa-spinner fa-spin';
-                badgeLabel.innerText = 'Searching Player:';
-                badgeValue.innerText = 'Verifying with Game Server...';
+                badgeLabel.innerText = 'Checking:';
+                badgeValue.innerText = 'Fetching Player In-Game Name...';
 
                 debounceTimer = setTimeout(async () => {
-                    let foundName = null;
+                    let playerIGN = null;
 
-                    // Endpoint 1: Direct Regional Player Info Endpoint
+                    // Direct Cross-Origin API Gateway Call
                     try {
-                        const controller = new AbortController();
-                        const timeoutId = setTimeout(() => controller.abort(), 2500);
-                        const res = await fetch(`https://free-fire-api.vercel.app/api/player?uid=${uid}&region=ind`, { signal: controller.signal });
-                        clearTimeout(timeoutId);
-                        
+                        const targetUrl = `https://freefireapi.com.br/api/search_id?id=${uid}&region=IND`;
+                        const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`);
                         if (res.ok) {
                             const data = await res.json();
-                            if (data && (data.nickname || data.name || data.basicInfo?.nickname)) {
-                                foundName = data.nickname || data.name || data.basicInfo?.nickname;
+                            if (data && (data.nickname || data.basicInfo?.nickname)) {
+                                playerIGN = data.nickname || data.basicInfo.nickname;
                             }
                         }
                     } catch (e) {}
 
-                    // Endpoint 2: Secondary Endpoint
-                    if (!foundName) {
+                    // Secondary Indian Player Lookup Gateway
+                    if (!playerIGN) {
                         try {
-                            const controller2 = new AbortController();
-                            const timeoutId2 = setTimeout(() => controller2.abort(), 2500);
-                            const res2 = await fetch(`https://ff-api-roan.vercel.app/api/player?uid=${uid}`, { signal: controller2.signal });
-                            clearTimeout(timeoutId2);
-
+                            const targetUrl2 = `https://api.zone4games.com/v1/games/freefire/player?uid=${uid}`;
+                            const res2 = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl2)}`);
                             if (res2.ok) {
                                 const data2 = await res2.json();
-                                if (data2 && (data2.nickname || data2.name || data2.basicInfo?.nickname)) {
-                                    foundName = data2.nickname || data2.name || data2.basicInfo?.nickname;
+                                if (data2 && (data2.name || data2.username || data2.player_name)) {
+                                    playerIGN = data2.name || data2.username || data2.player_name;
                                 }
                             }
                         } catch (e) {}
                     }
 
-                    // Display Result smoothly (Never show red error message)
-                    statusBadge.className = 'player-status-badge';
-                    badgeIcon.className = 'fas fa-check-circle';
-
-                    if (foundName) {
+                    // Result Update
+                    if (playerIGN) {
+                        statusBadge.className = 'player-status-badge success';
+                        badgeIcon.className = 'fas fa-user-check';
                         badgeLabel.innerText = 'Player Name:';
-                        badgeValue.innerText = foundName;
+                        badgeValue.innerText = playerIGN;
                     } else {
-                        // Smooth Verified Badge when Garena hides IGN on banned record
-                        badgeLabel.innerText = 'Account Status:';
-                        badgeValue.innerText = 'Banned UID Verified (' + uid + ')';
+                        // UID exist karti hai lekin server response nahi de raha
+                        statusBadge.className = 'player-status-badge error';
+                        badgeIcon.className = 'fas fa-exclamation-triangle';
+                        badgeLabel.innerText = 'Status:';
+                        badgeValue.innerText = 'UID Not Found / Server Busy';
                     }
-                }, 400);
+                }, 500);
             } else {
+                statusBadge.className = 'player-status-badge';
                 statusBadge.style.display = 'none';
             }
         });
@@ -554,7 +575,7 @@
             emailInput.classList.remove('input-error');
         });
 
-        // Submit Validation
+        // Form Submit Validation
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
@@ -563,16 +584,16 @@
             const emailVal = emailInput.value.trim();
             const selectedReason = document.querySelector('input[name="suspensionReason"]:checked');
 
-            // 1. UID Check
+            // UID Format validation
             const uidRegex = /^[0-9]{8,11}$/;
-            if (!uidRegex.test(uidVal)) {
+            if (!uidRegex.test(uidVal) || isFakeOrRepeatingUID(uidVal)) {
                 uidInput.classList.add('input-error');
                 isValid = false;
             } else {
                 uidInput.classList.remove('input-error');
             }
 
-            // 2. Email Check
+            // Email validation
             const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(emailVal)) {
                 emailInput.classList.add('input-error');
@@ -581,7 +602,7 @@
                 emailInput.classList.remove('input-error');
             }
 
-            // 3. Reason Check
+            // Reason select validation
             if (!selectedReason) {
                 radioContainer.classList.add('input-error');
                 isValid = false;
@@ -589,7 +610,7 @@
                 radioContainer.classList.remove('input-error');
             }
 
-            // Phone vibration on invalid input
+            // Error vibration
             if (!isValid) {
                 if (navigator.vibrate) {
                     navigator.vibrate(500);
@@ -597,7 +618,7 @@
                 return false;
             }
 
-            // Proceed to Payment Page
+            // Success Redirect
             window.location.href = "payment.html";
         });
     </script>
