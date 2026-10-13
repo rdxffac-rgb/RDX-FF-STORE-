@@ -1,525 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FREE FIRE LIFE | Gaming Account Assistance & Recovery Support</title>
-    <!-- Google Fonts & Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary: #ff4655;
-            --primary-glow: rgba(255, 70, 85, 0.4);
-            --secondary: #ff7675;
-            --bg-dark: #0a0d14;
-            --card-bg: #121721;
-            --card-border: rgba(255, 255, 255, 0.08);
-            --text-light: #f0f6fc;
-            --text-dim: #8b949e;
-            --telegram: #0088cc;
-            --telegram-glow: rgba(0, 136, 204, 0.4);
-            --gold: #f5a623;
-            --success: #2ea44f;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-            width: 100%;
-        }
-
-        h1, h2, h3, h4, .logo {
-            font-family: 'Rajdhani', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Header / Navbar */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 6%;
-            background: rgba(18, 23, 33, 0.95);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--card-border);
-            gap: 12px;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-light);
-            white-space: nowrap;
-            line-height: 1;
-        }
-
-        .logo span {
-            color: var(--primary);
-            text-shadow: 0 0 10px var(--primary-glow);
-        }
-
-        .btn-support {
-            background: linear-gradient(135deg, #0088cc, #0077b5);
-            color: #ffffff;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 13px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-            box-shadow: 0 4px 12px var(--telegram-glow);
-            flex-shrink: 0;
-        }
-
-        .btn-support:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(0, 136, 204, 0.6);
-        }
-
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 60px 18px 40px;
-            background: radial-gradient(circle at 50% 15%, rgba(255, 70, 85, 0.15), transparent 75%);
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 70, 85, 0.1);
-            color: var(--primary);
-            border: 1px solid rgba(255, 70, 85, 0.3);
-            padding: 6px 14px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 18px;
-            max-width: 100%;
-        }
-
-        .hero h1 {
-            font-size: 34px;
-            font-weight: 700;
-            line-height: 1.25;
-            margin-bottom: 15px;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-            text-shadow: 0 0 12px var(--primary-glow);
-        }
-
-        .hero p {
-            color: var(--text-dim);
-            max-width: 580px;
-            margin: 0 auto 30px;
-            font-size: 14.5px;
-            padding: 0 8px;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 15px;
-            width: 100%;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 13.5px;
-            color: var(--text-dim);
-            background: rgba(255, 255, 255, 0.03);
-            padding: 10px 20px;
-            border-radius: 25px;
-            border: 1px solid var(--card-border);
-            width: 100%;
-            max-width: 320px;
-        }
-
-        .stat-item i {
-            color: var(--success);
-            font-size: 15px;
-        }
-
-        /* Services Section */
-        .services-section {
-            padding: 40px 16px 60px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: var(--text-dim);
-            font-size: 14px;
-            margin-bottom: 35px;
-            padding: 0 10px;
-        }
-
-        .cards-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 30px 22px;
-            border: 1px solid var(--card-border);
-            position: relative;
-            max-width: 440px;
-            width: 100%;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            border-color: var(--primary);
-        }
-
-        .card-tag {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #f5a623, #d48806);
-            color: #000;
-            font-weight: 700;
-            font-size: 11px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            letter-spacing: 0.5px;
-        }
-
-        .card-icon {
-            font-size: 38px;
-            color: var(--primary);
-            margin-bottom: 16px;
-        }
-
-        .card h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            padding-right: 90px;
-        }
-
-        .card-description {
-            font-size: 13.5px;
-            color: var(--text-dim);
-            margin-bottom: 20px;
-        }
-
-        .features-list {
-            list-style: none;
-            margin: 20px 0;
-            border-top: 1px solid var(--card-border);
-            border-bottom: 1px solid var(--card-border);
-            padding: 16px 0;
-        }
-
-        .features-list li {
-            font-size: 13.5px;
-            color: #d1d5db;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .features-list li:last-child {
-            margin-bottom: 0;
-        }
-
-        .features-list li i {
-            color: var(--success);
-            font-size: 13px;
-            flex-shrink: 0;
-        }
-
-        .price-box {
-            margin: 20px 0;
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-        }
-
-        .price {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text-light);
-            font-family: 'Rajdhani', sans-serif;
-        }
-
-        .old-price {
-            text-decoration: line-through;
-            color: var(--text-dim);
-            font-size: 16px;
-        }
-
-        .btn-order {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            text-align: center;
-            padding: 13px;
-            background: linear-gradient(135deg, var(--primary), #e03241);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px var(--primary-glow);
-        }
-
-        .btn-order:hover {
-            box-shadow: 0 6px 20px rgba(255, 70, 85, 0.6);
-            transform: translateY(-2px);
-        }
-
-        /* Trust & Security Section */
-        .trust-section {
-            padding: 50px 16px;
-            background: #0d121c;
-            text-align: center;
-            border-top: 1px solid var(--card-border);
-            border-bottom: 1px solid var(--card-border);
-        }
-
-        .trust-section h2 {
-            font-size: 26px;
-            margin-bottom: 8px;
-        }
-
-        .trust-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 18px;
-            margin-top: 30px;
-            max-width: 440px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .trust-box {
-            background: var(--card-bg);
-            padding: 22px 18px;
-            border-radius: 12px;
-            border: 1px solid var(--card-border);
-        }
-
-        .trust-box i {
-            font-size: 28px;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
-
-        .trust-box h4 {
-            font-size: 17px;
-            margin-bottom: 6px;
-        }
-
-        .trust-box p {
-            font-size: 13px;
-            color: var(--text-dim);
-            line-height: 1.5;
-        }
-
-        /* Footer */
-        footer {
-            background: #080a0f;
-            padding: 40px 18px 25px;
-            color: var(--text-dim);
-            font-size: 13px;
-            border-top: 1px solid var(--card-border);
-        }
-
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            gap: 20px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .footer-brand h3 {
-            font-size: 20px;
-            color: var(--text-light);
-            margin-bottom: 6px;
-        }
-
-        .footer-brand p {
-            font-size: 12.5px;
-            max-width: 360px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-
-        .footer-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 13.5px;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            font-size: 12px;
-        }
-
-        /* Responsive Breakpoints */
-        @media (min-width: 769px) {
-            header { padding: 18px 8%; }
-            .logo { font-size: 26px; }
-            .btn-support { padding: 9px 20px; font-size: 14px; }
-            .hero { padding: 90px 20px 60px; }
-            .hero h1 { font-size: 46px; }
-            .stats-bar { flex-direction: row; gap: 30px; }
-            .stat-item { width: auto; max-width: none; }
-            .trust-grid { grid-template-columns: repeat(3, 1fr); max-width: 1000px; }
-            .footer-content { flex-direction: row; text-align: left; justify-content: space-between; }
-            .footer-brand p { margin: 0; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApnaServiceHub</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <div class="logo">FREE FIRE <span>LIFE</span></div>
-        <a href="https://t.me/Freefire_life_ofc" target="_blank" rel="noopener noreferrer" class="btn-support">
-            <i class="fab fa-telegram-plane"></i> Support
-        </a>
-    </header>
+  <!-- Top Navbar -->
+  <header>
+    <a href="#" class="logo">⚡ Apna<span>ServiceHub</span></a>
+    <div class="nav-actions">
+      <a href="#" class="login-btn">Login/Register</a>
+      <i class="fa-solid fa-bars" style="font-size: 1.2rem; cursor: pointer;"></i>
+    </div>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <span class="badge"><i class="fas fa-shield-alt"></i> Verified & Dedicated Gaming Desk</span>
-        <h1>Account Review & <span>Unban Support</span></h1>
-        <p>Get professional assistance with Free Fire account review requests, suspension queries, and official support appeal filings with direct Telegram updates.</p>
+  <div class="container">
+    <!-- Hero Banner Section -->
+    <div class="hero-section">
+      <div class="hero-text">
+        <h1 class="hero-title">ALL DIGITAL<br>SERVICES<br>IN ONE PLACE!</h1>
+        <p class="hero-subtitle">Instant Top-ups, Recharges & Game Credits</p>
+      </div>
+      <div class="hero-img-box">
+        <!-- Aapki Banner Image -->
+        <img src="banner1.jpg" alt="Digital Services Banner" class="hero-banner">
+      </div>
+    </div>
 
-        <div class="stats-bar">
-            <div class="stat-item"><i class="fas fa-check-circle"></i> Complete Appeal Guide</div>
-            <div class="stat-item"><i class="fas fa-lock"></i> Strict Account Privacy</div>
-            <div class="stat-item"><i class="fas fa-headset"></i> Direct Telegram Desk</div>
+    <!-- Services Main Box -->
+    <div class="section-wrapper">
+      <h2 class="section-title">Our Services</h2>
+      
+      <!-- Search Input -->
+      <div class="search-box">
+        <input type="text" placeholder="Search for services...">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </div>
+
+      <!-- Services Grid -->
+      <div class="services-grid">
+
+        <!-- Card 1: Instagram -->
+        <div class="service-card">
+          <span class="badge-instant">⚡ INSTANT</span>
+          <div class="card-icon" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
+            <i class="fa-brands fa-instagram" style="font-size: 24px; color: #fff;"></i>
+          </div>
+          <div>
+            <h3 class="card-title">Instagram Services</h3>
+            <p class="card-desc">Followers, Likes & Growth</p>
+          </div>
+          <a href="#" class="glow-btn">ORDER NOW</a>
         </div>
-    </section>
 
-    <!-- Services Section -->
-    <section class="services-section">
-        <h2 class="section-title">Official Assistance Service</h2>
-        <p class="section-subtitle">Dedicated help designed to recover and review your suspended gaming profile</p>
-        
-        <div class="cards-container">
-            <!-- ID Unban Assistance Card -->
-            <div class="card">
-                <span class="card-tag">Priority Support</span>
-                <div class="card-icon"><i class="fas fa-user-shield"></i></div>
-                <h3>ID Unban Request Service</h3>
-                <p class="card-description">Comprehensive support for submitting official appeal forms, account investigation tickets, and suspension reviews directly to official channels.</p>
-                
-                <ul class="features-list">
-                    <li><i class="fas fa-check-circle"></i> Official Appeal Ticket Draft Preparation</li>
-                    <li><i class="fas fa-check-circle"></i> Status Tracking & Submission Guide</li>
-                    <li><i class="fas fa-check-circle"></i> 24 to 48 Hours Appeal Timeline</li>
-                    <li><i class="fas fa-check-circle"></i> 1-on-1 Guidance on Telegram</li>
-                </ul>
-
-                <div class="price-box">
-                    <span class="price">₹499</span>
-                    <span class="old-price">₹999</span>
-                </div>
-
-                <a href="freefirelife.html" class="btn-order">
-                    <i class="fas fa-arrow-right"></i> Proceed to Request
-                </a>
-            </div>
+        <!-- Card 2: Jio Recharge -->
+        <div class="service-card">
+          <span class="badge-instant">⚡ INSTANT</span>
+          <div class="card-icon" style="background: #0a2885; border-radius: 50%;">
+            <span style="font-weight: 900; color: #fff;">Jio</span>
+          </div>
+          <div>
+            <h3 class="card-title">Jio Recharge</h3>
+            <p class="card-desc">Plans & Data Top-up</p>
+          </div>
+          <a href="#" class="glow-btn">RECHARGE NOW</a>
         </div>
-    </section>
 
-    <!-- Trust & Quality Section -->
-    <section class="trust-section">
-        <h2>Why Choose Free Fire Life?</h2>
-        <div class="trust-grid">
-            <div class="trust-box">
-                <i class="fas fa-bolt"></i>
-                <h4>Fast Response</h4>
-                <p>Connect immediately with our support team on Telegram for step-by-step assistance.</p>
-            </div>
-            <div class="trust-box">
-                <i class="fas fa-user-lock"></i>
-                <h4>Confidential & Safe</h4>
-                <p>Your Player UID and account details remain completely confidential and safe with us.</p>
-            </div>
-            <div class="trust-box">
-                <i class="fas fa-headset"></i>
-                <h4>Direct Communication</h4>
-                <p>No automated bots. Chat directly with an active agent regarding your account case.</p>
-            </div>
+        <!-- Card 3: Airtel Recharge -->
+        <div class="service-card">
+          <span class="badge-instant">⚡ INSTANT</span>
+          <div class="card-icon" style="background: #e40000; border-radius: 50%;">
+            <i class="fa-solid fa-signal" style="color: #fff;"></i>
+          </div>
+          <div>
+            <h3 class="card-title">Airtel Recharge</h3>
+            <p class="card-desc">Plans & Data Top-up</p>
+          </div>
+          <a href="#" class="glow-btn">RECHARGE NOW</a>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3>FREE FIRE LIFE</h3>
-                <p>Independent gaming support and appeal guidance community portal. Providing verified documentation and assistance for gamers.</p>
-            </div>
-            <div class="footer-links">
-                <a href="https://t.me/Freefire_life_ofc" target="_blank" rel="noopener noreferrer"><i class="fab fa-telegram-plane"></i> @Freefire_life_ofc</a>
-            </div>
+        <!-- Card 4: Play Store Redeem Code -->
+        <div class="service-card">
+          <div class="card-icon" style="background: rgba(255,255,255,0.1);">
+            <i class="fa-brands fa-google-play" style="font-size: 24px; color: #34a853;"></i>
+          </div>
+          <div>
+            <h3 class="card-title">Redeem Codes</h3>
+            <p class="card-desc">Play Store & More</p>
+          </div>
+          <a href="#" class="glow-btn">GET CODE</a>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 FREE FIRE LIFE. All rights reserved. Not affiliated with or endorsed by Garena Free Fire.</p>
+
+        <!-- Card 5: Free Fire Top-up (Full Width) -->
+        <div class="service-card full-width">
+          <span class="badge-instant">⚡ INSTANT</span>
+          <div style="flex: 1; margin-bottom: 10px;">
+            <h3 class="card-title" style="color: #ffcc00; font-size: 1.05rem;">Free Fire Top-up</h3>
+            <p class="card-desc" style="margin-bottom: 0;">Diamonds & Bundles</p>
+          </div>
+          <a href="#" class="glow-btn" style="width: 100%;">TOP-UP NOW</a>
         </div>
-    </footer>
+
+      </div>
+
+      <!-- Bottom Trust Bar -->
+      <div class="trust-bar">
+        <span class="trust-title">Why Choose Us?</span>
+        <div class="trust-badges">
+          <span>🛡️ Secure Pay</span>
+          <span>•</span>
+          <span>⚡ Instant</span>
+          <span>•</span>
+          <span>💬 24/7 Support</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 </body>
 </html>
